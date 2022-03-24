@@ -12,19 +12,25 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+import environ
 
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, True)
+)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+environ.Env.read_env(env_file=os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = [
     '.ap-northeast-2.compute.amazonaws.com'
@@ -79,11 +85,11 @@ WSGI_APPLICATION = 'chi_fomation.wsgi.application'
 DATABASES = {
     'default' : {
         'ENGINE' : 'django.db.backends.mysql',
-        'NAME' : os.environ.get("DB_NAME"),
-        'USER' : os.environ.get("DB_USER_NAME"), # master user name
-        'PASSWORD' : os.environ.get("DB_PASSWORD"),
-        'HOST' : os.environ.get("DB_HOST"), # endpoint
-        'PORT' : os.environ.get("DB_PORT"),
+        'NAME' : env("DB_NAME"),
+        'USER' : env("DB_USER_NAME"), # master user name
+        'PASSWORD' : env("DB_PASSWORD"),
+        'HOST' : env("DB_HOST"), # endpoint
+        'PORT' : env("DB_PORT"),
     }
 }
 
