@@ -5,3 +5,7 @@ pytz==2022.1
 sqlparse==0.4.2
 typing_extensions==4.1.1
 wincertstore==0.2
+django-extensions==3.1.5
+django-rest-swagger==2.2.0
+djangorestframework==3.13.1
+django-environ==0.8.1

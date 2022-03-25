@@ -23,6 +23,6 @@ class Chicken(models.Model):
 
 class Comment(models.Model):
     content = models.TextField()
-    star = models.IntegerField()
+    star = models.IntegerField(default=0.0)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     chicken = models.ForeignKey(Chicken, on_delete=models.CASCADE)

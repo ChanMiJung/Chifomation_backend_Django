@@ -33,7 +33,10 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = [
-    '.ap-northeast-2.compute.amazonaws.com'
+    '.ap-northeast-2.compute.amazonaws.com',
+    'localhost',
+    '127.0.0.1',
+    '*'
 ]
 
 
@@ -47,6 +50,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api',
+    'rest_framework',
+    'rest_framework_swagger',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
