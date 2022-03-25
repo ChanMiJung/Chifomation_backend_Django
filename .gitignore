@@ -1,1 +1,4 @@
 .env
+api/__pycache/
+chi_fomation/__pycache__/
+api/migrations/__pycache__/
