@@ -5,7 +5,7 @@ from .models import Brand, Chicken
 class BrandSerializer(serializers.ModelSerializer):
     class Meta:
         model = Brand
-        fields = ['name', 'img_url']
+        fields = ['id', 'name', 'img_url']
 
 
 class ChickenSerializer(serializers.ModelSerializer):
