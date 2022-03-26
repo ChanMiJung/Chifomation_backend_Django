@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.static import serve
 from django.conf import settings
 from django.conf.urls.static import static
 from main import views as main_views
@@ -26,4 +27,7 @@ urlpatterns = [
     path('/', include('main.urls')),
 ]
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += url(r'^media/(?P<path>.\*)$', serve, {
+    'document_root': settings.MEDIA_ROOT,
+})
