@@ -18,6 +18,7 @@ def list(request):
             for i in range(len(tags)):
                 tags[i] = '#' + tags[i]
             chicken.tags = tags
+            chicken.img_url = '/media/chickens/bhc/havanero_poteking_fride.png'
             value['chickens'].append(chicken)
             count += 1
             if count == 3:
