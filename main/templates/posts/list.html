@@ -22,29 +22,105 @@
       }
     </style>
   </head>
-  <body>
+  <body  style="background-color: beige;">
 
+    <div class="container" style="margin-top: 10px; margin-bottom: 10px;">
+      <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+          <div class="container">
+            <div class="row">
+              <div class="col-1 col-sm-2">
+                <div id="mainNavButton"><img src="/media/icon/menu.png" style="width:100%" alt=""></div>
+              </div>
+              <div class="col-10 col-sm-8" style="text-align: center;">
+                <button type="button" style="background-color:transparent; border: 0; outline: 0;"><img src="/media/logos/main_logo.png" style="width:80%" alt=""></button>
+              </div>
+              <div class="col-1 col-sm-2">
+                <div><img src="/media/icon/profile.png" style="width:100%" alt=""></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-3"></div>
+      </div>
+    </div>
+    <div class="container" id="mainNav" style="display:none; height: 400px;background-color: #F9A221;">
+      <div class="row">
+        <div class="col-3"></div>
+        <div class="col-3">
+          <div class="container">
+            <div class="row">
+              <div style="color: #704400; font-size: large; font-weight: bold;">브랜드</div>
+            </div>
+            {% for brand in brands %}
+            <div class="row">
+              <div style="color: white; font-size: medium; font-weight: bold;">- {{ brand.brand }}</div>
+            </div>
+            {% endfor %}
+            <div class="row">
+              <div style="color: white; font-size: medium; font-weight: bold;">- BHC</div>
+            </div>
+            <div class="row">
+              <div style="color: white; font-size: medium; font-weight: bold;">- 교촌치킨</div>
+            </div>
+            <div class="row">
+              <div style="color: white; font-size: medium; font-weight: bold;">- 굽네치킨</div>
+            </div>
+            <div class="row">
+              <div style="color: white; font-size: medium; font-weight: bold;">- 노랑통닭</div>
+            </div>
+            <div class="row">
+              <div style="color: white; font-size: medium; font-weight: bold;">- 네네치킨</div>
+            </div>
+            <div class="row">
+              <div style="color: white; font-size: medium; font-weight: bold;">- 60계치킨</div>
+            </div>
+            <div class="row">
+              <div style="color: white; font-size: medium; font-weight: bold;">- 자담치킨</div>
+            </div>
+            <div class="row">
+              <div style="color: white; font-size: medium; font-weight: bold;">- 페리카나</div>
+            </div>
+            <div class="row">
+              <div style="color: white; font-size: medium; font-weight: bold;">- 푸라닭</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="container">
+            <div class="row">
+              <div style="color: #704400; font-size: large; font-weight: bold;">카테고리</div>
+            </div>
+            <div class="row">
+              <div style="color: white; font-size: medium; font-weight: bold;">- 후라이드</div>
+            </div>
+            <div class="row">
+              <div style="color: white; font-size: medium; font-weight: bold;">- 양념</div>
+            </div>
+            <div class="row">
+              <div style="color: white; font-size: medium; font-weight: bold;">- 간장</div>
+            </div>
+            <div class="row">
+              <div style="color: white; font-size: medium; font-weight: bold;">- 시즈닝</div>
+            </div>
+            <div class="row">
+              <div style="color: white; font-size: medium; font-weight: bold;">- 기타</div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div style="color: #704400; font-size: large; font-weight: bold;">신메뉴</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-3"></div>
+      </div>
+    </div>
     <div class="container">
       <div class="row">
         <div class="col-3"></div>
         <div class="col-6">
-
-          <div class="container">
-            <div class="row">
-              <div class="col-1 col-sm-2">
-                <img src="/media/icon/menu.png" style="width:100%" alt="">
-              </div>
-              <div class="col-10 col-sm-8" style="text-align: center;">
-                <img src="/media/logos/main_logo.png" style="width:80%" alt="">
-              </div>
-              <div class="col-1 col-sm-2">
-                <img src="/media/icon/profile.png" style="width:100%" alt="">
-              </div>
-            </div>
-            
-            
-            
-          </div>
           <div class="d-flex">
               <button class="w-100 h-20 btn btn-dark" style="height: 100px;" type="button"><div id="typing-target">오늘의 랜덤 치킨</div></button>
           </div>
@@ -53,15 +129,15 @@
             <input class="form-control me-2 search-input" style="border-left: none;"  type="search" placeholder="치킨, 브랜드 이름을 검색해보세요" aria-label="Search">
           </div> -->
           <div>
-            <input style="background-image: url('/media/icon/search.png'); background-position: 5px center; background-repeat: no-repeat; background-size: 20px; padding-left: 30px; box-sizing: border-box;" class="form-control me-2 rounded-pill search-input" type="search" placeholder="치킨, 브랜드 이름을 검색해보세요" aria-label="Search">
+            <input id="mainSearch" style="background-image: url('/media/icon/search.png'); background-position: 5px center; background-repeat: no-repeat; background-size: 20px; padding-left: 30px; box-sizing: border-box;" class="form-control me-2 rounded-pill search-input" type="search" placeholder="치킨, 브랜드 이름을 검색해보세요" aria-label="Search">
           </div>
           <h4 style="margin-top: 10%;"><img src="/media/icon/crown.png" style="width: 30px; margin-bottom: 10px;" alt="">브랜드별 대표 메뉴</h3>
-          <div id="carouselExampleControls" class="carousel slide w-100" data-bs-ride="carousel">
+          <div id="carouselExampleControls" class="carousel slide w-100" data-bs-ride="carousel" style="background-color: #FFD54C;">
             <div class="carousel-inner">
               {% for brand in brands %}
                 {% if brand.idx == 1 %}
-                  <div class="carousel-item active">
-                    {{ brand.brand }}
+                  <div class="carousel-item active" style="text-align: center;">
+                    <div style="text-align: center; color: red; font-size: large; font-weight: bold;">{{ brand.brand }}</div>
                     {% for chicken in brand.chickens %}
                     
                     <div class="card mb-3 w-100" style="max-width: 540px;">
@@ -128,22 +204,22 @@
 
           <h4 style="margin-top:10%;"><img src="/media/icon/fire.png" style="width: 30px; margin-bottom: 10px;" alt="">브랜드치킨 신메뉴</h4>
           <div>
-            <div class="card mb-2" style="background-color: chartreuse;">
-              <div class="card-body">
-                This is some text within a card body.
-              </div>
+            <div class="card mb-2" style="background-color: transparent; border-color: #92DF45;">
+              <!-- <div class="card-body"> -->
+                <div><img style="width: 100%;" src="/media/banners/banner_new.png" alt=""></div>
+              <!-- </div> -->
             </div>
-            <div class="card mb-2" style="background-color:darkgray;">
+            <div class="card mb-2" style="background-color:#F3F3F3; border-color: #F3F3F3;">
               <div class="card-body">
                 굽네치킨 불금치킨
               </div>
             </div>
-            <div class="card mb-2" style="background-color: darkgray;">
+            <div class="card mb-2" style="background-color: #F3F3F3; border-color: #F3F3F3;">
               <div class="card-body">
                 BHC 포테킹
               </div>
             </div>
-            <div class="card mb-2" style="background-color: darkgray;">
+            <div class="card mb-2" style="background-color: #F3F3F3; border-color: #F3F3F3;">
               <div class="card-body">
                 자담치킨 불패치킨
               </div>
@@ -272,7 +348,20 @@
           text: '오늘의 랜덤 치킨',
         });
       }, 5000);
-      
+
+      $(document).ready(function() {
+        $('#mainNavButton').click(function() {
+          $('#mainNav').slideToggle();
+        });
+        $('#mainSearch').keydown(function(key) {
+          if (key.keyCode == 13) {
+            var search_text = $('#mainSearch').val();
+            if (search_text != '') {
+              location.href = 'search.html';
+            }
+          }
+        });
+      });
 
     </script>
   </body>
