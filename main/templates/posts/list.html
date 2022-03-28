@@ -23,7 +23,7 @@
     </style>
   </head>
   <body  style="background-color: beige;">
-
+    {% load static %}
     <div class="container" style="margin-top: 10px; margin-bottom: 10px;">
       <div class="row">
         <div class="col-3"></div>
@@ -31,13 +31,13 @@
           <div class="container">
             <div class="row">
               <div class="col-1 col-sm-2">
-                <div id="mainNavButton"><img src="/media/icon/menu.png" style="width:100%" alt=""></div>
+                <div id="mainNavButton"><img src="{% static 'media/icon/menu.png' %}" style="width:100%" alt=""></div>
               </div>
               <div class="col-10 col-sm-8" style="text-align: center;">
                 <button type="button" style="background-color:transparent; border: 0; outline: 0;"><img src="/media/logos/main_logo.png" style="width:80%" alt=""></button>
               </div>
               <div class="col-1 col-sm-2">
-                <div><img src="/media/icon/profile.png" style="width:100%" alt=""></div>
+                <div><img src="{% static 'media/icon/profile.png' %}" style="width:100%" alt=""></div>
               </div>
             </div>
           </div>
