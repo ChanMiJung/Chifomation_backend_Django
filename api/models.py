@@ -9,7 +9,7 @@ class Brand(models.Model):
 
 class Category(models.Model):
     name = models.TextField()
-    color = models.TextField()
+    color = models.TextField(blank=True)
 
 
 class Chicken(models.Model):
