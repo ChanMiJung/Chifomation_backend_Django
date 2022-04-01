@@ -7,11 +7,15 @@ class Brand(models.Model):
     img_url = models.TextField(blank=True)
 
 
+class Category(models.Model):
+    name = models.TextField()
+    color = models.TextField()
+
 
 class Chicken(models.Model):
     name = models.TextField()
     cost = models.IntegerField()
-    category = models.TextField(blank=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     img_url = models.TextField(blank=True)
     original_category = models.TextField()
     introduction = models.TextField(blank=True)
