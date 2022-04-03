@@ -14,12 +14,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- typing animation -->
     <script src="https://unpkg.com/type-hangul"></script>
+    <link rel="stylesheet" type="text/css" href="../../../static/css/font.css">
     <title>치포메이션</title>
     <style>
       .search-input {
         background-image: url("{% static 'media/icon/search.png'%}");
-        background-position: center;
+        background-position: 5px center;
         background-repeat: no-repeat;
+        background-size: 20px;
+        padding-left: 30px;
+        box-sizing: border-box;
       }
     </style>
   </head>
@@ -129,7 +133,7 @@
             <input class="form-control me-2 search-input" style="border-left: none;"  type="search" placeholder="치킨, 브랜드 이름을 검색해보세요" aria-label="Search">
           </div> -->
           <div>
-            <input id="mainSearch" style="background-image: '{% static 'media/icon/crown.png' %}'; background-position: 5px center; background-repeat: no-repeat; background-size: 20px; padding-left: 30px; box-sizing: border-box;" class="form-control me-2 rounded-pill search-input" type="search" placeholder="치킨, 브랜드 이름을 검색해보세요" aria-label="Search">
+            <input id="mainSearch" onclick="location.href='/'" class="form-control me-2 rounded-pill search-input" type="search" placeholder="치킨, 브랜드 이름을 검색해보세요" aria-label="Search">
           </div>
           <h4 style="margin-top: 10%;"><img src="{% static 'media/icon/crown.png' %}" style="width: 30px; margin-bottom: 10px;" alt="">브랜드별 대표 메뉴</h3>
           <div id="carouselExampleControls" class="carousel slide w-100" data-bs-ride="carousel" style="background-color: #FFD54C;">
@@ -355,9 +359,9 @@
         });
         $('#mainSearch').keydown(function(key) {
           if (key.keyCode == 13) {
-            var search_text = $('#mainSearch').val();
+            var search_text = $('#mainSearch').val().trim();
             if (search_text != '') {
-              location.href = 'search.html';
+              location.href = 'search?search='+search_text;
             }
           }
         });

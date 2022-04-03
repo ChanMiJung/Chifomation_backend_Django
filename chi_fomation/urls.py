@@ -24,8 +24,10 @@ from main import views as main_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('api.urls')),
-    path('', main_views.list, name='root'),
-    path('/', include('main.urls')),
+    # path('', main_views.list, name='root'),
+    # path('/', main_views.list, name='root'),
+    # path('/', include('main.urls')),
+    path('', include('main.urls')),
 ]
 
 # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
