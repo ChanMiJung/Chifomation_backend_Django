@@ -16,4 +16,4 @@ class CategorySerializer(serializers.ModelSerializer):
 class ChickenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Chicken
-        fields = ['id', 'name', 'cost', 'category', 'img_url', 'original_category', 'introduction', 'hash_tag', 'brand', 'new', 'popularity']
+        fields = ['id', 'name', 'cost', 'category', 'img_url', 'original_category', 'introduction', 'hash_tag', 'brand', 'new', 'popularity', 'score']

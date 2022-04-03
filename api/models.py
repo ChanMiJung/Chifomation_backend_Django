@@ -23,10 +23,11 @@ class Chicken(models.Model):
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
     new = models.BooleanField(default=False)
     popularity = models.BooleanField(default=False)
+    score = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
 
 
 class Comment(models.Model):
     content = models.TextField()
-    star = models.IntegerField(default=0.0)
+    star = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     chicken = models.ForeignKey(Chicken, on_delete=models.CASCADE)
