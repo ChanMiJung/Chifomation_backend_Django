@@ -1,373 +1,223 @@
+{% extends 'base.html' %}
 {% load static %}
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% block body %}
+<div class="d-flex">
+  <button class="w-100 h-20 btn btn-dark" style="height: 100px;" type="button"><div id="typing-target">오늘의 랜덤 치킨</div></button>
+</div>
+<div>
+<input id="mainSearch" class="form-control me-2 rounded-pill search-input" type="search" placeholder="치킨, 브랜드 이름을 검색해보세요" aria-label="Search">
+</div>
+<h4 style="margin-top: 10%;"><img src="{% static 'media/icon/crown.png' %}" style="width: 30px; margin-bottom: 10px;" alt="">브랜드별 대표 메뉴</h3>
+<div id="carouselExampleControls" class="carousel slide w-100" data-bs-ride="carousel" style="background-color: #FFD54C;">
+<div class="carousel-inner">
+  {% for brand in brands %}
+    {% if brand.idx == 1 %}
+      <div class="carousel-item active" style="text-align: center;">
+        <div style="text-align: center; color: red; font-size: large; font-weight: bold;">{{ brand.brand }}</div>
+        {% for chicken in brand.chickens %}
+        <div class="card mb-3 w-100" style="max-width: 540px;">
+          <div class="row g-0 w-100">
+            <div class="col-md-6">
+              <img src="{{ chicken.img_url }}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-6">
+              <div class="card-body">
+                <h5 class="card-title">{{ chicken.name }}</h5>
+                <p class="card-text">
+                  {% for tag in chicken.tags %}
+                    <div>{{ tag }}</div>
+                  {% endfor %}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="carousel-item">
+        <div style="text-align: center; color: red; font-size: large; font-weight: bold;">{{ brand.brand }}</div>
+        {% for chicken in brand.chickens %}
+        <div class="card mb-3" style="max-width: 540px;">
+          <div class="row g-0">
+            <div class="col-md-6">
+              <img src="{{ chicken.img_url }}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-6">
+              <div class="card-body">
+                <h5 class="card-title">{{ chicken.name }}</h5>
+                <p class="card-text">
+                  {% for tag in chicken.tags %}
+                    <div>{{ tag }}</div>
+                  {% endfor %}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  
+  {% endfor %}
+  <!-- <div class="carousel-item">
+    <img src="..." class="d-block w-100" alt="...">
+  </div>
+  <div class="carousel-item">
+    <img src="..." class="d-block w-100" alt="...">
+  </div> -->
+</div>
+<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+  <span class="visually-hidden">Previous</span>
+</button>
+<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+  <span class="visually-hidden">Next</span>
+</button>
+</div>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <!-- <script src="https://unpkg.com/@egjs/flicking/dist/flicking.pkgd.min.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://unpkg.com/@egjs/flicking/dist/flicking.css" crossorigin="anonymous" /> -->
-    <!-- jquery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- typing animation -->
-    <script src="https://unpkg.com/type-hangul"></script>
-    <link rel="stylesheet" type="text/css" href="../../../static/css/font.css">
-    <title>치포메이션</title>
-    <style>
-      .search-input {
-        background-image: url("{% static 'media/icon/search.png'%}");
-        background-position: 5px center;
-        background-repeat: no-repeat;
-        background-size: 20px;
-        padding-left: 30px;
-        box-sizing: border-box;
+<h4 style="margin-top:10%;"><img src="{% static 'media/icon/fire.png' %}" style="width: 30px; margin-bottom: 10px;" alt="">브랜드치킨 신메뉴</h4>
+<div>
+<div class="card mb-2" style="background-color: transparent; border-color: #92DF45;">
+  <!-- <div class="card-body"> -->
+    <div><img style="width: 100%;" src="{% static 'media/banners/banner_new.png' %}" alt=""></div>
+  <!-- </div> -->
+</div>
+<div class="card mb-2" style="background-color:#F3F3F3; border-color: #F3F3F3;">
+  <div class="card-body">
+    굽네치킨 불금치킨
+  </div>
+</div>
+<div class="card mb-2" style="background-color: #F3F3F3; border-color: #F3F3F3;">
+  <div class="card-body">
+    BHC 포테킹
+  </div>
+</div>
+<div class="card mb-2" style="background-color: #F3F3F3; border-color: #F3F3F3;">
+  <div class="card-body">
+    자담치킨 불패치킨
+  </div>
+</div>
+
+<h4 style="margin-top:10%;"><img src="{% static 'media/icon/review.png' %}" style="width: 30px; margin-bottom: 10px;" alt="">회원님들의 리뷰</h4>
+<div>
+  <!-- Viewport element -->
+  <div id="carousel" class="flicking-viewport">
+    <!-- Camera element -->
+    <div class="flicking-camera" style="height: 25rem;">
+      <!-- Panels, class names are your choice -->
+      <div class="panel">
+        <div class="card shadow" style="border-style: none; border-radius: 20px; width: 14rem; height: 24rem; margin: auto 20px;">
+          <img src="{% static 'media/chickens/bhc/havanero_poteking_fride.png' %}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">굽네치킨</h5>
+            <p class="card-text">
+              <h6 style="color: red;">고추바사삭</h6>
+              <div>
+                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
+                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
+                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
+                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
+                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
+              </div>
+              <div>
+                치킨에서 약간 탄두리 치킨 맛이 나요. 고블링, 마블링 소스에 찍어 먹으면 더 맛있어요!
+                <br>
+                <small class="text-muted">by. 굽네굽아니오</small>
+              </div>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="card shadow" style="border-style: none; border-radius: 20px; width: 14rem; height: 24rem; margin: auto 20px;">
+          <img src="{% static 'media/chickens/bhc/havanero_poteking_fride.png' %}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">굽네치킨</h5>
+            <p class="card-text">
+              <h6 style="color: red;">볼케이노</h6>
+              <div>
+                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
+                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
+                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
+                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
+                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
+              </div>
+              <div>
+                저에겐 살짝 맵지만, 불맛이 강하게 나서 좋아요. 치밥으로 강추합니다. bb
+                <br>
+                <small class="text-muted">by. 볼케이노처돌이</small>
+              </div>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="card shadow" style="border-style: none; border-radius: 20px; width: 14rem; height: 24rem; margin: auto 20px;">
+          <img src="{% static 'media/chickens/bhc/havanero_poteking_fride.png' %}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">굽네치킨</h5>
+            <p class="card-text">
+              <h6 style="color: red;">갈비천왕</h6>
+              <div>
+                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
+                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
+                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
+                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
+                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
+              </div>
+              <div>
+                갈비와 치킨의 만남. 맛있어요
+                <br>
+                <small class="text-muted">by. 웅치킨</small>
+              </div>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+<script>
+  // import Flicking from "@egjs/flicking";
+  // import "@egjs/flicking/dist/flicking.css";
+
+  var myCarousel = document.querySelector('#carouselExampleControls')
+  var carousel = new bootstrap.Carousel(myCarousel, {
+    interval: 5000,
+    wrap: true
+  });
+  const flicking = new Flicking("#carousel", {
+    align: "center",
+    circular: true,
+    bound: true,
+    renderOnlyVisible: true
+  });
+  TypeHangul.type('#typing-target', {
+      text: '오늘의 랜덤 치킨',
+    });
+  setInterval(function(){
+    TypeHangul.type('#typing-target', {
+      text: '오늘의 랜덤 치킨',
+    });
+  }, 5000);
+
+  $(document).ready(function() {
+    $('#mainNavButton').click(function() {
+      $('#mainNav').slideToggle();
+    });
+    $('#mainSearch').keydown(function(key) {
+      if (key.keyCode == 13) {
+        var search_text = $('#mainSearch').val().trim();
+        if (search_text != '') {
+          location.href = 'search?search='+search_text;
+        }
       }
-    </style>
-  </head>
-  <body  style="background-color: beige;">
-    <div class="container" style="margin-top: 10px; margin-bottom: 10px;">
-      <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6">
-          <div class="container">
-            <div class="row">
-              <div class="col-1 col-sm-2">
-                <div id="mainNavButton"><img src="{% static 'media/icon/menu.png' %}" style="width:100%" alt=""></div>
-              </div>
-              <div class="col-10 col-sm-8" style="text-align: center;">
-                <button type="button" style="background-color:transparent; border: 0; outline: 0;"><img src="{% static 'media/logos/main_logo.png' %}" style="width:80%" alt=""></button>
-              </div>
-              <div class="col-1 col-sm-2">
-                <div><img src="{% static 'media/icon/profile.png' %}" style="width:100%" alt=""></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-3"></div>
-      </div>
-    </div>
-    <div class="container" id="mainNav" style="display:none; height: 400px;background-color: #F9A221;">
-      <div class="row">
-        <div class="col-3"></div>
-        <div class="col-3">
-          <div class="container">
-            <div class="row">
-              <div style="color: #704400; font-size: large; font-weight: bold;">브랜드</div>
-            </div>
-            {% for brand in brands %}
-            <div class="row">
-              <div style="color: white; font-size: medium; font-weight: bold;">- {{ brand.brand }}</div>
-            </div>
-            {% endfor %}
-            <div class="row">
-              <div style="color: white; font-size: medium; font-weight: bold;">- BHC</div>
-            </div>
-            <div class="row">
-              <div style="color: white; font-size: medium; font-weight: bold;">- 교촌치킨</div>
-            </div>
-            <div class="row">
-              <div style="color: white; font-size: medium; font-weight: bold;">- 굽네치킨</div>
-            </div>
-            <div class="row">
-              <div style="color: white; font-size: medium; font-weight: bold;">- 노랑통닭</div>
-            </div>
-            <div class="row">
-              <div style="color: white; font-size: medium; font-weight: bold;">- 네네치킨</div>
-            </div>
-            <div class="row">
-              <div style="color: white; font-size: medium; font-weight: bold;">- 60계치킨</div>
-            </div>
-            <div class="row">
-              <div style="color: white; font-size: medium; font-weight: bold;">- 자담치킨</div>
-            </div>
-            <div class="row">
-              <div style="color: white; font-size: medium; font-weight: bold;">- 페리카나</div>
-            </div>
-            <div class="row">
-              <div style="color: white; font-size: medium; font-weight: bold;">- 푸라닭</div>
-            </div>
-          </div>
-        </div>
-        <div class="col-3">
-          <div class="container">
-            <div class="row">
-              <div style="color: #704400; font-size: large; font-weight: bold;">카테고리</div>
-            </div>
-            <div class="row">
-              <div style="color: white; font-size: medium; font-weight: bold;">- 후라이드</div>
-            </div>
-            <div class="row">
-              <div style="color: white; font-size: medium; font-weight: bold;">- 양념</div>
-            </div>
-            <div class="row">
-              <div style="color: white; font-size: medium; font-weight: bold;">- 간장</div>
-            </div>
-            <div class="row">
-              <div style="color: white; font-size: medium; font-weight: bold;">- 시즈닝</div>
-            </div>
-            <div class="row">
-              <div style="color: white; font-size: medium; font-weight: bold;">- 기타</div>
-            </div>
-          </div>
-          <div class="container">
-            <div class="row">
-              <div style="color: #704400; font-size: large; font-weight: bold;">신메뉴</div>
-            </div>
-          </div>
-        </div>
-        <div class="col-3"></div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6">
-          <div class="d-flex">
-              <button class="w-100 h-20 btn btn-dark" style="height: 100px;" type="button"><div id="typing-target">오늘의 랜덤 치킨</div></button>
-          </div>
-          <!-- <div class="input-group mb-3" style="border-radius: 40px;">
-            <span class="input-group-text" style="background-color: white; border-right: none"><img style="width: 20px;" src="/media/search.png" alt=""></span>
-            <input class="form-control me-2 search-input" style="border-left: none;"  type="search" placeholder="치킨, 브랜드 이름을 검색해보세요" aria-label="Search">
-          </div> -->
-          <div>
-            <input id="mainSearch" onclick="location.href='/'" class="form-control me-2 rounded-pill search-input" type="search" placeholder="치킨, 브랜드 이름을 검색해보세요" aria-label="Search">
-          </div>
-          <h4 style="margin-top: 10%;"><img src="{% static 'media/icon/crown.png' %}" style="width: 30px; margin-bottom: 10px;" alt="">브랜드별 대표 메뉴</h3>
-          <div id="carouselExampleControls" class="carousel slide w-100" data-bs-ride="carousel" style="background-color: #FFD54C;">
-            <div class="carousel-inner">
-              {% for brand in brands %}
-                {% if brand.idx == 1 %}
-                  <div class="carousel-item active" style="text-align: center;">
-                    <div style="text-align: center; color: red; font-size: large; font-weight: bold;">{{ brand.brand }}</div>
-                    {% for chicken in brand.chickens %}
-                    
-                    <div class="card mb-3 w-100" style="max-width: 540px;">
-                      <div class="row g-0 w-100">
-                        <div class="col-md-4">
-                          <img src="{{ chicken.img_url }}" class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                          <div class="card-body">
-                            <h5 class="card-title">{{ chicken.name }}</h5>
-                            <p class="card-text">
-                              {% for tag in chicken.tags %}
-                                <div>{{ tag }}</div>
-                              {% endfor %}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    {% endfor %}
-                  </div>
-                {% else %}
-                  <div class="carousel-item">
-                    {{ brand.brand }}
-                    {% for chicken in brand.chickens %}
-                    <div class="card mb-3" style="max-width: 540px;">
-                      <div class="row g-0">
-                        <div class="col-md-4">
-                          <img src="{% static 'media/chickens/bhc/havanero_poteking_fride.png' %}" class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                          <div class="card-body">
-                            <h5 class="card-title">{{ chicken.name }}</h5>
-                            <p class="card-text">
-                              {% for tag in chicken.tags %}
-                                <div>{{ tag }}</div>
-                              {% endfor %}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    {% endfor %}
-                  </div>
-                {% endif %}
-              
-              {% endfor %}
-              <!-- <div class="carousel-item">
-                <img src="..." class="d-block w-100" alt="...">
-              </div>
-              <div class="carousel-item">
-                <img src="..." class="d-block w-100" alt="...">
-              </div> -->
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
+    });
+  });
 
-          <h4 style="margin-top:10%;"><img src="{% static 'media/icon/fire.png' %}" style="width: 30px; margin-bottom: 10px;" alt="">브랜드치킨 신메뉴</h4>
-          <div>
-            <div class="card mb-2" style="background-color: transparent; border-color: #92DF45;">
-              <!-- <div class="card-body"> -->
-                <div><img style="width: 100%;" src="{% static 'media/banners/banner_new.png' %}" alt=""></div>
-              <!-- </div> -->
-            </div>
-            <div class="card mb-2" style="background-color:#F3F3F3; border-color: #F3F3F3;">
-              <div class="card-body">
-                굽네치킨 불금치킨
-              </div>
-            </div>
-            <div class="card mb-2" style="background-color: #F3F3F3; border-color: #F3F3F3;">
-              <div class="card-body">
-                BHC 포테킹
-              </div>
-            </div>
-            <div class="card mb-2" style="background-color: #F3F3F3; border-color: #F3F3F3;">
-              <div class="card-body">
-                자담치킨 불패치킨
-              </div>
-            </div>
-
-            <h4 style="margin-top:10%;"><img src="{% static 'media/icon/review.png' %}" style="width: 30px; margin-bottom: 10px;" alt="">회원님들의 리뷰</h4>
-            <div>
-              <!-- Viewport element -->
-              <div id="carousel" class="flicking-viewport">
-                <!-- Camera element -->
-                <div class="flicking-camera" style="height: 25rem;">
-                  <!-- Panels, class names are your choice -->
-                  <div class="panel">
-                    <div class="card shadow" style="border-style: none; border-radius: 20px; width: 14rem; height: 24rem; margin: auto 20px;">
-                      <img src="{% static 'media/chickens/bhc/havanero_poteking_fride.png' %}" class="card-img-top" alt="...">
-                      <div class="card-body">
-                        <h5 class="card-title">굽네치킨</h5>
-                        <p class="card-text">
-                          <h6 style="color: red;">고추바사삭</h6>
-                          <div>
-                            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                          </div>
-                          <div>
-                            치킨에서 약간 탄두리 치킨 맛이 나요. 고블링, 마블링 소스에 찍어 먹으면 더 맛있어요!
-                            <br>
-                            <small class="text-muted">by. 굽네굽아니오</small>
-                          </div>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="panel">
-                    <div class="card shadow" style="border-style: none; border-radius: 20px; width: 14rem; height: 24rem; margin: auto 20px;">
-                      <img src="{% static 'media/chickens/bhc/havanero_poteking_fride.png' %}" class="card-img-top" alt="...">
-                      <div class="card-body">
-                        <h5 class="card-title">굽네치킨</h5>
-                        <p class="card-text">
-                          <h6 style="color: red;">볼케이노</h6>
-                          <div>
-                            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                          </div>
-                          <div>
-                            저에겐 살짝 맵지만, 불맛이 강하게 나서 좋아요. 치밥으로 강추합니다. bb
-                            <br>
-                            <small class="text-muted">by. 볼케이노처돌이</small>
-                          </div>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="panel">
-                    <div class="card shadow" style="border-style: none; border-radius: 20px; width: 14rem; height: 24rem; margin: auto 20px;">
-                      <img src="{% static 'media/chickens/bhc/havanero_poteking_fride.png' %}" class="card-img-top" alt="...">
-                      <div class="card-body">
-                        <h5 class="card-title">굽네치킨</h5>
-                        <p class="card-text">
-                          <h6 style="color: red;">갈비천왕</h6>
-                          <div>
-                            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                          </div>
-                          <div>
-                            갈비와 치킨의 만남. 맛있어요
-                            <br>
-                            <small class="text-muted">by. 웅치킨</small>
-                          </div>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <br>
-            <br>
-          </div>
-        </div>
-        <div class="col-3"></div>
-        </div>
-    </div>
-    
-
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-    -->
-    <script src="https://unpkg.com/@egjs/flicking/dist/flicking.pkgd.min.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://unpkg.com/@egjs/flicking/dist/flicking.css" crossorigin="anonymous" />
-    <script>
-      // import Flicking from "@egjs/flicking";
-      // import "@egjs/flicking/dist/flicking.css";
-
-      var myCarousel = document.querySelector('#carouselExampleControls')
-      var carousel = new bootstrap.Carousel(myCarousel, {
-        interval: 5000,
-        wrap: true
-      });
-      const flicking = new Flicking("#carousel", {
-        align: "center",
-        circular: true,
-        bound: true,
-        renderOnlyVisible: true
-      });
-      TypeHangul.type('#typing-target', {
-          text: '오늘의 랜덤 치킨',
-        });
-      setInterval(function(){
-        TypeHangul.type('#typing-target', {
-          text: '오늘의 랜덤 치킨',
-        });
-      }, 5000);
-
-      $(document).ready(function() {
-        $('#mainNavButton').click(function() {
-          $('#mainNav').slideToggle();
-        });
-        $('#mainSearch').keydown(function(key) {
-          if (key.keyCode == 13) {
-            var search_text = $('#mainSearch').val().trim();
-            if (search_text != '') {
-              location.href = 'search?search='+search_text;
-            }
-          }
-        });
-      });
-
-    </script>
-  </body>
-</html>
-
+</script>
+{% endblock %}

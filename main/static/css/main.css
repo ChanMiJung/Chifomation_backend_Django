@@ -1,0 +1,9 @@
+.search-input {
+  background-image: url("/static/media/icon/search.png");
+  background-position: 10px center;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  padding-left: 40px;
+  box-sizing: border-box;
+  background-color: #B59A72;
+}
