@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'django_extensions',
     'main',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -143,6 +144,8 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
+AUTH_USER_MODEL = 'accounts.User'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

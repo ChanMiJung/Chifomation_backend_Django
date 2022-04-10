@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<div style="margin-top: 24px; width: 624px; height: 484px; background: #DDC8A8 0% 0% no-repeat padding-box; border: 1px solid #B59A72; border-radius: 10px;">
+  <div style="margin: 26px 262px; width: 100px; height: 34px; font-family: scdream8; font-size: 24px; color: #342615">내 프로필</div>
+  <div style="margin: 30px 236px; width: 150px; height: 150px; outline: none"><img src="{% static 'media/logos/logo.png' %}" style="width: 150px; height: 150px;" alt=""></div>
+  <div style="margin: 10px 112px; display: flex; justify-content: start;">
+    <div style="width: 100px; height: 28px; font-family: scdream6; font-size: 24px; color: #342615; text-align: center;">아이디</div>
+    <div style="width: 300px; height: 28px; font-family: scdream4; font-size: 24px; color: #342615; text-align: left;">qwerty</div>
+  </div>
+  <div style="margin: 10px 112px; display: flex; justify-content: start;">
+    <div style="width: 100px; height: 28px; font-family: scdream6; font-size: 24px; color: #342615; text-align: center;">닉네임</div>
+    <div style="width: 300px; height: 28px; font-family: scdream4; font-size: 24px; color: #342615; text-align: left;">닉네임어쩌라고저쩌라고</div>
+  </div>
+  <div id="signOut" style="cursor: pointer; margin: 60px 242px 0 242px; font-family: scdream4; font-size: 18px; color: #342615; text-align: center;">로그아웃</div>
+</div>
+<script>
+  $(document).ready(function () {
+    $('#signOut').click(function() {
+      console.log('logout');
+    });
+  });
+</script>
+{% endblock %}
