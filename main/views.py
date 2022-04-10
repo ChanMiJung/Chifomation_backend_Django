@@ -1,15 +1,16 @@
-from django.shortcuts import render, redirect
-from api.models import Brand, Category, Chicken
+from django.shortcuts import render, redirect, get_object_or_404
+from api.models import Brand, Category, Chicken, Comment
 
 # Create your views here.
 def list(request):
     brand_chickens = Brand.objects.all()
+    categories = Category.objects.all()
     brands = []
     idx = 1
     for brand in brand_chickens:
         value = {
             'idx' : idx,
-            'brand' : brand.name,
+            'name' : brand.name,
             'chickens' : []
         }
         count = 0
@@ -18,7 +19,7 @@ def list(request):
             for i in range(len(tags)):
                 tags[i] = '#' + tags[i]
             chicken.tags = tags
-            chicken.img_url = 'media/chickens/bhc/havanero_poteking_fride.png'
+            chicken.img_url = '/static/media/chickens/bhc/havanero_poteking_fride.png'
             value['chickens'].append(chicken)
             count += 1
             if count == 3:
@@ -26,9 +27,11 @@ def list(request):
                 break
         brands.append(value)
         idx += 1
-    return render(request, 'posts/list.html', {'brands': brands})
+    return render(request, 'posts/list.html', {'brands': brands, 'categories': categories})
 
 def search(request):
+    brands = Brand.objects.all()
+    categories = Category.objects.all()
     chickens = []
     sub_menu = 'brand'
 
@@ -50,7 +53,6 @@ def search(request):
             chickens.append(chicken)
 
         sub_menu = 'category'
-        data = Category.objects.all()
     else:
         raw_chickens = Chicken.objects.filter(name__icontains=search_parameter)
         for chicken in raw_chickens:
@@ -59,8 +61,28 @@ def search(request):
                 tags[i] = '#' + tags[i]
             chicken.tags = tags
             chicken.brand_name = chicken.brand.name
+            chicken.category_name = chicken.category.name
             chickens.append(chicken)
 
-        data = Brand.objects.all()
+    return render(request, 'posts/search.html',  {'search_parameter': search_parameter, 'sub_menu': sub_menu, 'brands': brands, 'chickens': chickens, 'categories': categories})
 
-    return render(request, 'posts/search.html',  {'search_parameter': search_parameter, 'sub_menu': sub_menu, 'sub_menu_data': data, 'chickens': chickens})
+def detail(request, chicken_id):
+    categories = Category.objects.all()
+    brands = Brand.objects.all()
+    # 치킨 상세정보
+    chicken = get_object_or_404(Chicken, id=chicken_id)
+    tags = chicken.hash_tag.split(',')
+    for i in range(len(tags)):
+        tags[i] = '#' + tags[i]
+    chicken.tags = tags
+    chicken.img_url = '/static/media/chickens/bhc/havanero_poteking_fride.png'
+    chicken.brand_name = chicken.brand.name
+    chicken.category_name = chicken.category.name
+    
+    # 리뷰
+    comments = Comment.objects.filter(chicken_id=chicken_id)
+
+    # 같은 브랜드 다른 치킨
+    brand_chickens = Chicken.objects.filter(brand_id=chicken.brand_id)
+
+    return render(request, 'posts/detail.html', {'chicken': chicken, 'comments': comments, 'brand_chickens': brand_chickens, 'categories': categories, 'brands': brands})

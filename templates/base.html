@@ -22,72 +22,58 @@
     {% block head %}{% endblock %}
     <title>치포메이션</title>
   </head>
-  <body  style="background-color: beige;">
-    <div class="container" style="margin-top: 10px; margin-bottom: 10px;">
-      <div class="row">
-        <div class="col-3 col-md-2"></div>
-        <div class="col-6 col-md-8">
-          <div class="container">
-            <div class="row">
-              <div class="col-1 col-sm-2">
-                <div id="mainNavButton"><img src="{% static 'media/icon/menu.png' %}" style="width:100%" alt=""></div>
-              </div>
-              <div class="col-10 col-sm-8" style="text-align: center;">
-                <button type="button" onclick="location.href='/'" style="background-color:transparent; border: 0; outline: 0;"><img src="{% static 'media/logos/main_logo.png' %}" style="width:80%" alt=""></button>
-              </div>
-              <div class="col-1 col-sm-2">
-                <div><img src="{% static 'media/icon/profile.png' %}" style="width:100%" alt=""></div>
-              </div>
+  <body style="cursor: default; background-color: #FAF3D9; position: relative; max-width: 720px; margin: 0px auto;">
+    <div style="position: relative; max-width: 624px; margin: 0px auto; display: flex; justify-content: space-between; margin-top:15px;">
+      <div id="mainNavButton" style="cursor:pointer; margin-top: 5px;"><img src="{% static 'media/icon/menu.png' %}" style="width:26px;" alt=""></div>
+      <button type="button" onclick="location.href='/'" style="background-color:transparent; border: 0; outline: 0;"><img src="{% static 'media/logos/main_logo.png' %}" style="width: 207px;" alt=""></button>
+      <div id="profile" style="margin-top: 9px; width: 28px; height: 28px; cursor: pointer;"><img src="{% static 'media/icon/profile.png' %}" style="width:28px;" alt=""></div>
+    </div>
+    <div id="mainNav" style="position: relative; display:none; width: 624px; height: 460px; margin: 12px auto; background-color: #B59A72; padding: 20px 12px;">
+      <div style="display: flex; justify-content: start;">
+        <div style="width: 300px; height: 420px;">
+          <div style="height: 34px; font-family: scdream8; font-size: 22px; color: #704400;">브랜드</div>
+          {% for brand in brands %}
+          <div style="margin-top: 8px; width: 260px; height: 26px;">
+            <div class="menu-item" style="display: inline-block; height: 26px; cursor: pointer; font-family: scdream5; font-size: 18px; color: #FEFBF1;">
+              <input type="hidden" id="menuName" value="{{ brand.name }}">
+              - {{ brand.name }}
             </div>
           </div>
+          {% endfor %}
         </div>
-        <div class="col-3 col-md-2"></div>
+        <div style="width: 300px; height: 420px;">
+          <div style="height: 34px; font-family: scdream8; font-size: 22px; color: #704400;">카테고리</div>
+          {% for category in categories %}
+          <div style="margin-top: 8px; width: 260px; height: 26px;">
+            <div class="menu-item" style="display: inline-block; height: 26px; cursor: pointer; font-family: scdream5; font-size: 18px; color: #FEFBF1;">
+              <input type="hidden" id="menuName" value="{{ category.name }}">
+              - {{ category.name }}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
       </div>
     </div>
-    <div class="container" id="mainNav" style="display:none; height: 400px;background-color: #F9A221;">
-      <div class="row">
-        <div class="col-3 col-md-2"></div>
-        <div class="col-3 col-md-4">
-          <div class="container">
-            <div class="row">
-              <div style="color: #704400; font-size: large; font-weight: bold;">브랜드</div>
-            </div>
-            {% for brand in brands %}
-            <div class="row">
-              <div style="color: white; font-size: medium; font-weight: bold;">- {{ brand.brand }}</div>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-        <div class="col-3 col-md-4">
-          <div class="container">
-            <div class="row">
-              <div style="color: #704400; font-size: large; font-weight: bold;">카테고리</div>
-            </div>
-            {% for category in categories %}
-            <div class="row">
-              <div style="color: white; font-size: medium; font-weight: bold;">- {{ category.name }}</div>
-            </div>
-            {% endfor %}
-          </div>
-          <div class="container">
-            <div class="row">
-              <div style="color: #704400; font-size: large; font-weight: bold;">신메뉴</div>
-            </div>
-          </div>
-        </div>
-        <div class="col-3 col-md-2"></div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-3 col-md-2"></div>
-        <div class="col-6 col-md-8">
-          {% block body %}{% endblock %}
-        </div>
-        <div class="col-3 col-md-2"></div>
-        </div>
+    <div style="position: relative; max-width: 624px; margin: 19px auto;">
+      {% block body %}{% endblock %}
     </div>
   </body>
+  <script>
+    $(document).ready(function() {
+      $('#mainNavButton').click(function() {
+        $('#mainNav').slideToggle();
+      });
+      $(".menu-item").each(function() {
+        $(this).click(function() {
+          location.href = '/search?search='+ $(this).children('#menuName').val().trim();
+        });
+      });
+      $('#profile').click(function () {
+        location.href = '/accounts/signIn';
+        // location.href = '/accounts/profile';
+      });
+    });
+
+  </script>
 </html>
 

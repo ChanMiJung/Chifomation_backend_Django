@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<style>
+textarea {
+  font-family: scdream4;
+  font-size: 16px;
+  color:#60482C;
+}
+textarea::placeholder {
+  font-family: scdream4;
+  font-size: 16px;
+  color:#60482C;
+}
+
+</style>
+{% endblock %}
+{% block body %}
+<div style="max-width: 624px; min-height: 423px; border: 1px solid #B59A72;">
+  <div style="text-align: center; background: linear-gradient( to bottom, #FFC757, #FAF3D9 90%);">
+    <img style="width: 350px; height: 250px;" src="{{ chicken.img_url }}" class="card-img-top" alt="...">
+  </div>
+  <div style="margin: 12px;">
+    <div style="font-family: scdream7; font-size: 20px; color: #BC0000;">{{ chicken.brand_name }}</div>
+    <div style="height: 30px; font-family: scdream7; font-size: 24px; color: #553300;">{{ chicken.name }}</div>
+    <div style="display: flex; justify-content: start;">
+      <span><img src="{% static 'media/icon/yellow_star.png' %}" alt="" style="width: 18px; margin-right:5px;"></span>
+      <span style="font-family: scdream5; font-size: 18px; color: #6C4B24; padding-top: 1px;">{{ chicken.score }}</span>
+    </div>
+    <div style="display: flex; justify-content: start;">
+      {% for tag in chicken.tags %}
+      <div style="background-color: #B19C7B; border-radius: 30px; min-width: 110px; height: 34px; margin-top: 8px; margin-right: 8px;">
+        <div style="margin: 4px 10px; font-family: scdream7; font-size: 18px; color: #FEFBF1;">{{ tag }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    <div style="margin-top: 18px; max-width: 600px; min-height: 29px; font-family: scdream5; font-size: 20px; color:#342615;">{{ chicken.introduction }}</div>
+    <!-- <div style="margin-top: 5px;" >{{ chicken.cost }}원</div> -->
+  </div>
+</div>
+<div style="margin-top: 26px; display: flex; justify-content: space-between;">
+  <div style="font-family: scdream7; color: #342615; font-size: 24px;"><img src="{% static 'media/icon/review.png' %}" style="width: 30px; margin-bottom: 10px; margin-right: 5px;" alt="">회원님들의 리뷰</div>
+  <div id="enrollReviewButton" style="font-family: scdream5; color: #342615; font-size: 18px; cursor: pointer;">리뷰 작성하기</div>
+</div>
+<div id="editReview" style="display:none; max-width: 624px; min-height: 194px; background-color: #B59A72; margin-bottom: 1px; padding: 10px;">
+  <div style="display: flex; justify-content: space-between;">
+    <div style="height: 24px; font-family: scdream5; font-size:16px; color: #60482C;">굽네굽네아니오</div>
+    <div id="enrollReview" style="cursor: pointer; width: 40px; height: 20px; font-family: scdream4; font-size: 16px; color: #FAF3D9;">등록</div>
+  </div>
+  <div style="display: flex; justify-content: start;">
+    <span>
+      <img id="reviewStar1" style="cursor: pointer; float: left; width: 18px;" src="{% static 'media/icon/gray_star.png' %}" alt="">
+      <img id="reviewStar2" style="cursor: pointer; float: left; width: 18px;" src="{% static 'media/icon/gray_star.png' %}" alt="">
+      <img id="reviewStar3" style="cursor: pointer; float: left; width: 18px;" src="{% static 'media/icon/gray_star.png' %}" alt="">
+      <img id="reviewStar4" style="cursor: pointer; float: left; width: 18px;" src="{% static 'media/icon/gray_star.png' %}" alt="">
+      <img id="reviewStar5" style="cursor: pointer; float: left; width: 18px;" src="{% static 'media/icon/gray_star.png' %}" alt="">  
+    </span>
+  </div>
+  <div style="margin-top: 8px; padding: 12px 10px; max-width: 600px; height: 118px; background-color: white; border: 1px solid #60482C;">
+    <textarea type="text" style="width: 100%; height: 94px; resize: none; border: 0;" placeholder="리뷰를 작성해주세요."></textarea>
+  </div>
+</div>
+<div>
+  {% if comments %}
+  {% else %}
+  <div style="max-width: 624px; background-color: #B59A72; height: 126px; padding: 16px 10px; margin-bottom: 1px;">
+    <div style="height: 24px; font-family: scdream5; color: #60482C;">굽네굽네아니오</div>
+    <div style="display: flex; justify-content: start;">
+      <span>
+        <img style="float: left; width: 14px;" src="{% static 'media/icon/yellow_star.png' %}" alt="">
+        <img style="float: left; width: 14px;" src="{% static 'media/icon/yellow_star.png' %}" alt="">
+        <img style="float: left; width: 14px;" src="{% static 'media/icon/yellow_star.png' %}" alt="">
+        <img style="float: left; width: 14px;" src="{% static 'media/icon/yellow_star.png' %}" alt="">
+        <img style="float: left; width: 14px;" src="{% static 'media/icon/yellow_star.png' %}" alt="">  
+      </span>
+      <span style="margin-left: 4px; padding-bottom: 2px; font-family: scdream4; font-size: 12px; color: #FAF3D9;">2022.04.03</span>
+    </div>
+    <div style="font-family: scdream4; color: #FAF3D9; font-size: 16px;">
+      치킨에서 약간 탄두리 치킨 맛이 나요. 고블링, 마블링 소스에 찍어 먹으면 더 맛있어요!
+    </div>
+  </div>
+  <div style="max-width: 624px; background-color: #B59A72; min-height: 126px; padding: 16px 10px;">
+    <div style="height: 24px; font-family: scdream5; color: #60482C;">굽네굽네아니오</div>
+    <div style="display: flex; justify-content: start;">
+      <span>
+        <img style="float: left; width: 14px;" src="{% static 'media/icon/yellow_star.png' %}" alt="">
+        <img style="float: left; width: 14px;" src="{% static 'media/icon/yellow_star.png' %}" alt="">
+        <img style="float: left; width: 14px;" src="{% static 'media/icon/yellow_star.png' %}" alt="">
+        <img style="float: left; width: 14px;" src="{% static 'media/icon/yellow_star.png' %}" alt="">
+        <img style="float: left; width: 14px;" src="{% static 'media/icon/gray_star.png' %}" alt="">  
+      </span>
+      <span style="margin-left: 4px; padding-bottom: 2px; font-family: scdream4; font-size: 12px; color: #FAF3D9;">2022.04.03</span>
+    </div>
+    <div style="font-family: scdream4; color: #FAF3D9; font-size: 16px;">
+      치킨에서 약간 탄두리 치킨 맛이 나요. 고블링, 마블링 소스에 찍어 먹으면 더 맛있어요! 치킨에서 약간 탄두리 치킨 맛이 나요. 고블링, 마블링 소스에 찍어 먹으면 더 맛있어요! 치킨에서 약간 탄두리 치킨 맛이 나요. 고블링, 마블링 소스에 찍어 먹으면 더 맛있어요!
+    </div>
+  </div>
+  <!-- <div style="max-width: 624px; background-color: #B59A72; height: 126px;">
+    <div style="text-align: center; color:#FAF3D9; font-family: scdream4;padding-top: 50px;">
+      등록된 리뷰가 없습니다.
+    </div>
+  </div> -->
+    {% endif %}
+  <div style="cursor: pointer; margin-top: 26px; font-family: scdream5; font-size: 18px; color: #704400; text-align: center;">더보기</div>
+</div>
+
+<div style="font-family: scdream7; color: #342615; margin-top: 21px; font-size: 24px;">같은 브랜드 다른 치킨 둘러보기</div>
+<div style="margin-top: 10px;">
+  <!-- Viewport element -->
+  <div id="carousel" class="flicking-viewport">
+    <!-- Camera element -->
+    <div class="flicking-camera" style="height: 25rem;">
+      <!-- Panels, class names are your choice -->
+      {% for brand_chicken in brand_chickens %}
+      {% if brand_chicken.id != chicken.id and brand_chicken.popularity %}
+      <div id="otherChicken" class="panel" style="cursor: pointer;">
+        <input id="chickenId" type="hidden" value="{{brand_chicken.id}}">
+        <div class="shadow" style="width: 176px; height: 182px; background: #FAF3D9 0% 0% no-repeat padding-box; box-shadow: 0px 10px 10px #613E0029; border: 1px solid #DDC8A8; border-radius: 20px; padding: 12px 4px;">
+          <div style="width: 168px; height: 120px;"><img src="{{ brand_chicken.img_url }}" class="card-img-top" alt="..."></div>
+          <div style="width: 156px; height: 38px; font-family: scdream6; font-size: 16px; color: #6C4B24; text-align: center; word-break: keep-all;">{{ brand_chicken.name }}</div>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<br>
+<br>
+<script>
+  const flicking = new Flicking("#carousel", {
+    align: "prev",
+    circular: true,
+    bound: true,
+    renderOnlyVisible: true
+  });
+  $(document).ready(function() {
+    $('#mainSearch').keydown(function(key) {
+      if (key.keyCode == 13) {
+        var search_text = $('#mainSearch').val().trim();
+        if (search_text != '') {
+          location.href = 'search?search='+search_text;
+        }
+      }
+    });
+    $('#enrollReviewButton').click(function() {
+      $('#editReview').slideToggle();
+    });
+    // 리뷰 별점
+    var img_url = '';
+    $('#reviewStar1').click(function() {
+      if ($('#reviewStar1').attr('src').includes('yellow_star')) {
+        if ($('#reviewStar2').attr('src').includes('yellow_star')) {
+          for (var i=2;i<6;i++) {
+            img_url = $('#reviewStar'+ String(i)).attr('src').replace('yellow', 'gray');
+            $('#reviewStar'+ String(i)).attr('src', img_url);
+          }
+        } else {
+          img_url = $('#reviewStar1').attr('src').replace('yellow', 'gray');
+          $('#reviewStar1').attr('src', img_url);
+        }
+      } else {
+        img_url = $('#reviewStar1').attr('src').replace('gray', 'yellow');
+        $('#reviewStar1').attr('src', img_url);
+      }
+    });
+    $('#reviewStar2').click(function() {
+      if ($('#reviewStar2').attr('src').includes('yellow_star')) {
+        if ($('#reviewStar3').attr('src').includes('yellow_star')) {
+          for (var i=3;i<6;i++) {
+            img_url = $('#reviewStar'+ String(i)).attr('src').replace('yellow', 'gray');
+            $('#reviewStar'+ String(i)).attr('src', img_url);
+          }
+        } else {
+          img_url = $('#reviewStar2').attr('src').replace('yellow', 'gray');
+          $('#reviewStar2').attr('src', img_url);
+        }
+      } else {
+        for (var i=1;i<3;i++) {
+          img_url = $('#reviewStar'+String(i)).attr('src').replace('gray', 'yellow');
+          $('#reviewStar'+String(i)).attr('src', img_url);
+        }
+      }
+    });
+    $('#reviewStar3').click(function() {
+      if ($('#reviewStar3').attr('src').includes('yellow_star')) {
+        if ($('#reviewStar4').attr('src').includes('yellow_star')) {
+          for (var i=4;i<6;i++) {
+            img_url = $('#reviewStar'+ String(i)).attr('src').replace('yellow', 'gray');
+            $('#reviewStar'+ String(i)).attr('src', img_url);
+          }
+        } else {
+          img_url = $('#reviewStar3').attr('src').replace('yellow', 'gray');  
+          $('#reviewStar3').attr('src', img_url);
+        }
+      } else {
+        for (var i=1;i<4;i++) {
+          img_url = $('#reviewStar'+String(i)).attr('src').replace('gray', 'yellow');
+          $('#reviewStar'+String(i)).attr('src', img_url);
+        }
+      }
+    });
+    $('#reviewStar4').click(function() {
+      if ($('#reviewStar4').attr('src').includes('yellow_star')) {
+        if ($('#reviewStar5').attr('src').includes('yellow_star')) {
+          img_url = $('#reviewStar5').attr('src').replace('yellow', 'gray');
+          $('#reviewStar5').attr('src', img_url);
+
+        } else {
+          img_url = $('#reviewStar4').attr('src').replace('yellow', 'gray');
+          $('#reviewStar4').attr('src', img_url);
+        }
+      } else {
+        for (var i=1;i<5;i++) {
+          img_url = $('#reviewStar'+String(i)).attr('src').replace('gray', 'yellow');
+          $('#reviewStar'+String(i)).attr('src', img_url);
+        }
+      }
+    });
+    $('#reviewStar5').click(function () {
+      if ($('#reviewStar5').attr('src').includes('yellow_star')) {
+        img_url = $('#reviewStar5').attr('src').replace('yellow', 'gray');
+        $('#reviewStar5').attr('src', img_url);
+      } else {
+        for (var i=1;i<6;i++) {
+          img_url = $('#reviewStar'+String(i)).attr('src').replace('gray', 'yellow');
+          $('#reviewStar'+String(i)).attr('src', img_url);
+        }
+      }
+    });
+  });
+
+  // 다른 치킨
+  $("#otherChicken").each(function() {
+    $(this).click(function() {
+      location.href = $('#chickenId').val().trim();
+    });
+  });
+  
+
+</script>
+{% endblock %}

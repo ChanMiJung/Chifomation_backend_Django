@@ -1,179 +1,166 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block head %}
+<style>
+  [placeholder]:empty:before {
+    display: block;
+    content: attr(placeholder);
+    color: #FEFBF1;
+  }
+  #typing-target {
+    font-family: scdream5;
+    font-size: 20px;
+    color: white;
+    padding: 50px 0;
+  }
+</style>
+{% endblock %}
 {% block body %}
 <div class="d-flex">
-  <button class="w-100 h-20 btn btn-dark" style="height: 100px;" type="button"><div id="typing-target">오늘의 랜덤 치킨</div></button>
-</div>
-<div>
-<input id="mainSearch" class="form-control me-2 rounded-pill search-input" type="search" placeholder="치킨, 브랜드 이름을 검색해보세요" aria-label="Search">
-</div>
-<h4 style="margin-top: 10%;"><img src="{% static 'media/icon/crown.png' %}" style="width: 30px; margin-bottom: 10px;" alt="">브랜드별 대표 메뉴</h3>
-<div id="carouselExampleControls" class="carousel slide w-100" data-bs-ride="carousel" style="background-color: #FFD54C;">
-<div class="carousel-inner">
-  {% for brand in brands %}
-    {% if brand.idx == 1 %}
-      <div class="carousel-item active" style="text-align: center;">
-        <div style="text-align: center; color: red; font-size: large; font-weight: bold;">{{ brand.brand }}</div>
-        {% for chicken in brand.chickens %}
-        <div class="card mb-3 w-100" style="max-width: 540px;">
-          <div class="row g-0 w-100">
-            <div class="col-md-6">
-              <img src="{{ chicken.img_url }}" class="img-fluid rounded-start" alt="...">
-            </div>
-            <div class="col-md-6">
-              <div class="card-body">
-                <h5 class="card-title">{{ chicken.name }}</h5>
-                <p class="card-text">
-                  {% for tag in chicken.tags %}
-                    <div>{{ tag }}</div>
-                  {% endfor %}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-    {% else %}
-      <div class="carousel-item">
-        <div style="text-align: center; color: red; font-size: large; font-weight: bold;">{{ brand.brand }}</div>
-        {% for chicken in brand.chickens %}
-        <div class="card mb-3" style="max-width: 540px;">
-          <div class="row g-0">
-            <div class="col-md-6">
-              <img src="{{ chicken.img_url }}" class="img-fluid rounded-start" alt="...">
-            </div>
-            <div class="col-md-6">
-              <div class="card-body">
-                <h5 class="card-title">{{ chicken.name }}</h5>
-                <p class="card-text">
-                  {% for tag in chicken.tags %}
-                    <div>{{ tag }}</div>
-                  {% endfor %}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-    {% endif %}
-  
-  {% endfor %}
-  <!-- <div class="carousel-item">
-    <img src="..." class="d-block w-100" alt="...">
+  <div style="width: 624px; height: 140px; background-color: black; text-align: center;">
+    <div id="typing-target">오늘의 랜덤 치킨</div>
   </div>
-  <div class="carousel-item">
-    <img src="..." class="d-block w-100" alt="...">
-  </div> -->
 </div>
-<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-  <span class="visually-hidden">Previous</span>
-</button>
-<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-  <span class="visually-hidden">Next</span>
-</button>
+<div style="display: flex; justify-content: space-between; margin-top: 16px; max-width: 624px; height: 36px; background: #B59A72 0% 0% no-repeat padding-box; border-radius: 20px; padding: 6px 10px;">
+  <div style="margin-top: 2px; margin-right: 6px; width: 20px; height: 20px;"><img style="width: 20px; height: 20px; vertical-align: top;" src="{% static 'media/icon/search.png' %}" alt=""></div>
+  <div contenteditable="true" id="mainSearch" onKeyPress="javascript: if (event.keyCode==13) return false;" style="outline: none; cursor: text; color: #FEFBF1; width: 550px; height: 24px; margin-right: 12px;" placeholder="치킨, 브랜드 이름을 검색해보세요">{{ search_parameter }}</div>
+  <div id="resetSearch" style="cursor: pointer; width: 16px; height: 16px;">X</div>
+</div>
+<div style="margin-top: 40px; display: flex; justify-content: start;">
+  <div style="width: 30px; height: 30px; margin: 2px 4px 2px 0;"><img src="{% static 'media/icon/crown.png' %}" style="width: 30px; margin-bottom: 10px;" alt=""></div>
+  <div style="max-width: 596px; height: 28px; font-family: scdream7; font-size: 24px; color: #342615;">브랜드별 대표 메뉴</div>
 </div>
 
-<h4 style="margin-top:10%;"><img src="{% static 'media/icon/fire.png' %}" style="width: 30px; margin-bottom: 10px;" alt="">브랜드치킨 신메뉴</h4>
-<div>
-<div class="card mb-2" style="background-color: transparent; border-color: #92DF45;">
-  <!-- <div class="card-body"> -->
-    <div><img style="width: 100%;" src="{% static 'media/banners/banner_new.png' %}" alt=""></div>
-  <!-- </div> -->
+<div id="mainCarousel" class="carousel slide" data-bs-ride="carousel" style="width: 624px; height: 640px; margin-top: 14px; background-color: #FFDD81;">
+  <div class="carousel-inner">
+    {% for brand in brands %}
+      {% if brand.idx == 1 %}
+        <div class="carousel-item active">
+          <div style="font-family: scdream8; text-align: center; color: #BC0000; font-size: 34px; margin: 16px 0px 5px 0px;">{{ brand.name }}</div>
+          {% for chicken in brand.chickens %}
+          <div style="width: 580px; height: 160px; display: flex; justify-content: start; margin: 22px; border-radius: 20px; background-color: #FAF3D9;">
+            <div>
+              <img src="{{ chicken.img_url }}" style="width: 224px; height: 160px;" alt="...">
+            </div>
+            <div></div>
+            {{ chicken.name }}
+          </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="carousel-item">
+          <div style="font-family: scdream8; text-align: center; color: #BC0000; font-size: 34px; margin: 16px 0px 5px 0px;">{{ brand.name }}</div>
+          {% for chicken in brand.chickens %}
+          <div class="chicken-item" style="cursor: pointer; width: 580px; height: 160px; display: flex; justify-content: start; margin: 22px; border-radius: 20px; background-color: #FAF3D9;">
+            <input id="chickenId" type="hidden" value="{{ chicken.id }}">
+            <div style="text-align: center; border-radius: 20px 0 0 20px; background: #FFC757 0% 0% no-repeat padding-box; padding: 0 33px;">
+              <img src="{{ chicken.img_url }}" style="width: 224px; height: 160px;" alt="...">
+            </div>
+            <div style="width: 260px; height: 130px; padding: 15px;">
+              <div style="width: 260px; height: 60px; text-align: center; word-break: keep-all; margin-bottom: 15px; font-family: scdream7; font-size: 24px; color: #704400;">{{ chicken.name }}</div>
+              {% for tag in chicken.tags %}
+                <div style="width: 260px; height: 28px; font-family: scdream5; font-size: 18px; color: #342615; text-align: center; margin-top: 2px;">{{ tag }}</div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+  </button>
 </div>
-<div class="card mb-2" style="background-color:#F3F3F3; border-color: #F3F3F3;">
-  <div class="card-body">
-    굽네치킨 불금치킨
+<div style="margin-top: 40px; display: flex; justify-content: start;">
+  <div style="width: 30px; height: 30px; margin: 2px 4px 2px 0;"><img src="{% static 'media/icon/fire.png' %}" style="width: 30px; margin-bottom: 10px;" alt=""></div>
+  <div style="max-width: 596px; height: 28px; font-family: scdream7; font-size: 24px; color: #342615;">브랜드치킨 신메뉴</div>
+</div>
+<div style="margin-top: 18px;">
+  <div style="width: 624px; height: 142px; margin-bottom: 12px;">
+    <img style="width: 100%;" src="{% static 'media/banners/banner_new.png' %}" alt="">
+  </div>
+  <div style="margin: 12px 0; width: 624px; height: 56px; background: #B19C7B 0% 0% no-repeat padding-box; padding: 14px 8px;">
+    <div style="font-family: scdream5; font-size:20px; color: #FEFBF1;">굽네치킨 불금치킨</div>
+  </div>
+  <div style="margin: 12px 0; width: 624px; height: 56px; background: #B19C7B 0% 0% no-repeat padding-box; padding: 14px 8px;">
+    <div style="font-family: scdream5; font-size:20px; color: #FEFBF1;">BHC 포테킹</div>
+  </div>
+  <div style="margin: 12px 0; width: 624px; height: 56px; background: #B19C7B 0% 0% no-repeat padding-box; padding: 14px 8px;">
+    <div style="font-family: scdream5; font-size:20px; color: #FEFBF1;">자담치킨 불패치킨</div>
   </div>
 </div>
-<div class="card mb-2" style="background-color: #F3F3F3; border-color: #F3F3F3;">
-  <div class="card-body">
-    BHC 포테킹
-  </div>
+<div style="margin-top: 40px; display: flex; justify-content: start;">
+  <div style="width: 30px; height: 30px; margin: 2px 4px 2px 0;"><img src="{% static 'media/icon/review.png' %}" style="width: 30px; margin-bottom: 10px;" alt=""></div>
+  <div style="max-width: 596px; height: 28px; font-family: scdream7; font-size: 24px; color: #342615;">회원님들의 리뷰</div>
 </div>
-<div class="card mb-2" style="background-color: #F3F3F3; border-color: #F3F3F3;">
-  <div class="card-body">
-    자담치킨 불패치킨
-  </div>
-</div>
-
-<h4 style="margin-top:10%;"><img src="{% static 'media/icon/review.png' %}" style="width: 30px; margin-bottom: 10px;" alt="">회원님들의 리뷰</h4>
-<div>
+<div style="margin-top: 16px;">
   <!-- Viewport element -->
   <div id="carousel" class="flicking-viewport">
     <!-- Camera element -->
     <div class="flicking-camera" style="height: 25rem;">
       <!-- Panels, class names are your choice -->
-      <div class="panel">
-        <div class="card shadow" style="border-style: none; border-radius: 20px; width: 14rem; height: 24rem; margin: auto 20px;">
-          <img src="{% static 'media/chickens/bhc/havanero_poteking_fride.png' %}" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">굽네치킨</h5>
-            <p class="card-text">
-              <h6 style="color: red;">고추바사삭</h6>
-              <div>
-                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-              </div>
-              <div>
-                치킨에서 약간 탄두리 치킨 맛이 나요. 고블링, 마블링 소스에 찍어 먹으면 더 맛있어요!
-                <br>
-                <small class="text-muted">by. 굽네굽아니오</small>
-              </div>
-            </p>
+      <div class="panel" style="margin: 0 17px;">
+        <div class="shadow" style="width: 250px; height: 400px; background: #DDC8A8 0% 0% no-repeat padding-box; box-shadow: 0px 10px 10px #613E0029; border-radius: 20px; padding: 16px;">
+          <div>
+            <img style="width: 218px; height: 136px;" src="{% static 'media/chickens/bhc/havanero_poteking_fride.png' %}" class="card-img-top" alt="...">
           </div>
+          <div style="font-family: scdream7; font-size: 24px; margin-top: 8px; color: #704400;">굽네치킨</div>
+          <div style="font-family: scdream5; font-size: 20px; margin-top: 8px; color: #BC0000;">고추바사삭</div>
+          <div style="display: flex; justify-content: start; margin-top: 8px;">
+            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
+            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
+            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
+            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
+            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
+          </div>
+          <div style="margin-top: 10px; width: 218px; height: 90px; word-break: break-all; font-family: scdream5; font-size: 16px;">
+            치킨에서 약간 탄두리 치킨 맛이 나요. 고블링, 마블링 소스에 찍어 먹으면 더 맛있어요!
+          </div>
+          <div style="margin-top: 1px; width: 218px; height: 24px; font-family: scdream5; font-size: 16px; color: #60482C;">by.굽네굽네아니오</div>
         </div>
       </div>
-      <div class="panel">
-        <div class="card shadow" style="border-style: none; border-radius: 20px; width: 14rem; height: 24rem; margin: auto 20px;">
-          <img src="{% static 'media/chickens/bhc/havanero_poteking_fride.png' %}" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">굽네치킨</h5>
-            <p class="card-text">
-              <h6 style="color: red;">볼케이노</h6>
-              <div>
-                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-              </div>
-              <div>
-                저에겐 살짝 맵지만, 불맛이 강하게 나서 좋아요. 치밥으로 강추합니다. bb
-                <br>
-                <small class="text-muted">by. 볼케이노처돌이</small>
-              </div>
-            </p>
+      <div class="panel" style="margin: 0 17px;">
+        <div class="shadow" style="width: 250px; height: 400px; background: #DDC8A8 0% 0% no-repeat padding-box; box-shadow: 0px 10px 10px #613E0029; border-radius: 20px; padding: 16px;">
+          <div>
+            <img style="width: 218px; height: 136px;" src="{% static 'media/chickens/bhc/havanero_poteking_fride.png' %}" class="card-img-top" alt="...">
           </div>
+          <div style="font-family: scdream7; font-size: 24px; margin-top: 8px; color: #704400;">굽네치킨</div>
+          <div style="font-family: scdream5; font-size: 20px; margin-top: 8px; color: #BC0000;">볼케이노</div>
+          <div style="display: flex; justify-content: start; margin-top: 8px;">
+            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
+            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
+            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
+            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
+            <img src="{% static 'media/icon/empty_star.png' %}" alt="" style="width: 22px;">
+          </div>
+          <div style="margin-top: 10px; width: 218px; height: 90px; word-break: break-all; font-family: scdream5; font-size: 16px;">
+            저에겐 살짝 맵지만, 불맛이 강하게 나서 좋아요. 치밥으로 강추합니다. bb
+          </div>
+          <div style="margin-top: 1px; width: 218px; height: 24px; font-family: scdream5; font-size: 16px; color: #60482C;">by.볼케이노처돌이</div>
         </div>
       </div>
-      <div class="panel">
-        <div class="card shadow" style="border-style: none; border-radius: 20px; width: 14rem; height: 24rem; margin: auto 20px;">
-          <img src="{% static 'media/chickens/bhc/havanero_poteking_fride.png' %}" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">굽네치킨</h5>
-            <p class="card-text">
-              <h6 style="color: red;">갈비천왕</h6>
-              <div>
-                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-                <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 20px;">
-              </div>
-              <div>
-                갈비와 치킨의 만남. 맛있어요
-                <br>
-                <small class="text-muted">by. 웅치킨</small>
-              </div>
-            </p>
+      <div class="panel" style="margin: 0 17px;">
+        <div class="shadow" style="width: 250px; height: 400px; background: #DDC8A8 0% 0% no-repeat padding-box; box-shadow: 0px 10px 10px #613E0029; border-radius: 20px; padding: 16px;">
+          <div>
+            <img style="width: 218px; height: 136px;" src="{% static 'media/chickens/bhc/havanero_poteking_fride.png' %}" class="card-img-top" alt="...">
           </div>
+          <div style="font-family: scdream7; font-size: 24px; margin-top: 8px; color: #704400;">굽네치킨</div>
+          <div style="font-family: scdream5; font-size: 20px; margin-top: 8px; color: #BC0000;">갈비천왕</div>
+          <div style="display: flex; justify-content: start; margin-top: 8px;">
+            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
+            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
+            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
+            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
+            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
+          </div>
+          <div style="margin-top: 10px; width: 218px; height: 90px; word-break: break-all; font-family: scdream5; font-size: 16px;">
+            갈비와 치킨의 만남! 어색할 줄 알았는데, 맛있는거 + 맛있는거 = 왕맛있는거 입니다. 추라이추라이~
+          </div>
+          <div style="margin-top: 1px; width: 218px; height: 24px; font-family: scdream5; font-size: 16px; color: #60482C;">by.웅치킨</div>
         </div>
       </div>
     </div>
@@ -185,13 +172,13 @@
   // import Flicking from "@egjs/flicking";
   // import "@egjs/flicking/dist/flicking.css";
 
-  var myCarousel = document.querySelector('#carouselExampleControls')
+  var myCarousel = document.querySelector('#mainCarousel')
   var carousel = new bootstrap.Carousel(myCarousel, {
     interval: 5000,
     wrap: true
   });
   const flicking = new Flicking("#carousel", {
-    align: "center",
+    align: "prev",
     circular: true,
     bound: true,
     renderOnlyVisible: true
@@ -206,16 +193,21 @@
   }, 5000);
 
   $(document).ready(function() {
-    $('#mainNavButton').click(function() {
-      $('#mainNav').slideToggle();
-    });
-    $('#mainSearch').keydown(function(key) {
+    $('div[contenteditable]').keydown(function(key) {
       if (key.keyCode == 13) {
-        var search_text = $('#mainSearch').val().trim();
+        var search_text = $('#mainSearch')[0].innerText.trim();
         if (search_text != '') {
           location.href = 'search?search='+search_text;
         }
       }
+    });
+    $('#resetSearch').click(function () {
+      $('#mainSearch')[0].innerText = '';
+    });
+    $(".chicken-item").each(function() {
+      $(this).click(function() {
+        location.href = 'detail/'+ $('#chickenId').val().trim();
+      });
     });
   });
 
