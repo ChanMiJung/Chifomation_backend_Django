@@ -24,43 +24,58 @@
   <body style="cursor: default; background-color: #FAF3D9; position: relative; max-width: 720px; margin: 0px auto;">
     <div id="main" style="cursor: pointer; margin: 220px 228px 0 228px;"><img src="{% static 'media/logos/main_logo.png' %}" style="width:264px;" alt=""></div>
     <div style="margin: 54px 76px; width: 568px;">
-      <div>
-        <div style="outline: none; color: #B59A72; font-family: scdream4; font-size: 20px;">아이디</div>
-        <div style="width: 568px; height: 60px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 10px; padding: 15px 18px;">
-          <div contenteditable="true" id="loginId" onKeyPress="javascript: if (event.keyCode==13) return false;" style="outline: none; cursor: text; color: #B59A72; font-family: scdream4; font-size: 20px;"></div>
-        </div>  
-      </div>
-      <div style="margin-top: 26px;">
-        <div style="outline: none; color: #B59A72; font-family: scdream4; font-size: 20px;">비밀번호</div>
-        <div style="width: 568px; height: 60px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 10px; padding: 15px 18px;">
-          <div contenteditable="true" id="loginId" onKeyPress="javascript: if (event.keyCode==13) return false;" style="outline: none; cursor: text; color: #B59A72; font-family: scdream4; font-size: 20px;"></div>
-        </div>  
-      </div>
-      <div style="margin-top: 26px;">
-        <div style="outline: none; color: #B59A72; font-family: scdream4; font-size: 20px;">비밀번호 확인</div>
-        <div style="width: 568px; height: 60px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 10px; padding: 15px 18px;">
-          <div contenteditable="true" id="loginId" onKeyPress="javascript: if (event.keyCode==13) return false;" style="outline: none; cursor: text; color: #B59A72; font-family: scdream4; font-size: 20px;"></div>
-        </div>  
-      </div>
-      <div style="margin-top: 54px;">
-        <div style="outline: none; color: #B59A72; font-family: scdream4; font-size: 20px;">이름</div>
-        <div style="width: 568px; height: 60px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 10px; padding: 15px 18px;">
-          <div contenteditable="true" id="loginId" onKeyPress="javascript: if (event.keyCode==13) return false;" style="outline: none; cursor: text; color: #B59A72; font-family: scdream4; font-size: 20px;"></div>
-        </div>  
-      </div>
-      <div style="margin-top: 26px;">
-        <div style="outline: none; color: #B59A72; font-family: scdream4; font-size: 20px;">닉네임</div>
-        <div style="width: 568px; height: 60px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 10px; padding: 15px 18px;">
-          <div contenteditable="true" id="loginId" onKeyPress="javascript: if (event.keyCode==13) return false;" style="outline: none; cursor: text; color: #B59A72; font-family: scdream4; font-size: 20px;"></div>
-        </div>  
-      </div>
-      <div style="margin-top: 26px;">
-        <div style="outline: none; color: #B59A72; font-family: scdream4; font-size: 20px;">전화번호</div>
-        <div style="width: 568px; height: 60px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 10px; padding: 15px 18px;">
-          <div contenteditable="true" id="phoneNumber" onKeyPress="return keypressNumber(event)" style="outline: none; cursor: text; color: #B59A72; font-family: scdream4; font-size: 20px;"></div>
-        </div>  
-      </div>
-      <div id="enrollUser" style="cursor: pointer; margin-top: 56px; width: 568px; height: 106px; background: #B59A72 0% 0% no-repeat padding-box; border: 1px solid #707070; border-radius: 10px; padding: 32px 225px; font-size: 30px; font-family: scdream5; color: #FAF3D9;">가입하기</div>
+      <form method="POST" name="userInfo">
+        {% csrf_token %}
+        <div>
+          <div style="outline: none; color: #B59A72; font-family: scdream4; font-size: 20px;">아이디</div>
+          <div style="width: 568px; height: 60px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 10px; padding: 15px 18px;">
+            <!-- <div contenteditable="true" name="userID" id="userID" onKeyPress="javascript: if (event.keyCode==13) return false;" style="outline: none; cursor: text; color: #B59A72; font-family: scdream4; font-size: 20px;"></div> -->
+            <input name="username" id="username" style="outline: none; border: 0; width: 100%; cursor: text; color: #B59A72; font-family: scdream4; font-size: 20px;">
+          </div>  
+          <div id="idWarning" style="outline: none; font-family: scdream3; font-size: 12px; color: #DA0000; margin-top: 4px; height: 20px; display: none;"></div>
+        </div>
+        <div style="margin-top: 26px;">
+          <div style="outline: none; color: #B59A72; font-family: scdream4; font-size: 20px;">비밀번호</div>
+          <div style="width: 568px; height: 60px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 10px; padding: 15px 18px;">
+            <!-- <div contenteditable="true" id="password" onKeyPress="javascript: if (event.keyCode==13) return false;" style="outline: none; cursor: text; color: #B59A72; font-family: scdream4; font-size: 20px;"></div> -->
+            <input name="password1" id="password1" style="outline: none; border: 0; width: 100%; cursor: text; color: #B59A72; font-family: scdream4; font-size: 20px;">
+          </div>  
+          <div id="password1Warning" style="outline: none; font-family: scdream3; font-size: 12px; color: #DA0000; margin-top: 4px; height: 20px; display: none;"></div>
+        </div>
+        <div style="margin-top: 26px;">
+          <div style="outline: none; color: #B59A72; font-family: scdream4; font-size: 20px;">비밀번호 확인</div>
+          <div style="width: 568px; height: 60px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 10px; padding: 15px 18px;">
+            <!-- <div contenteditable="true" id="check_password" onKeyPress="javascript: if (event.keyCode==13) return false;" style="outline: none; cursor: text; color: #B59A72; font-family: scdream4; font-size: 20px;"></div> -->
+            <input name="password2" id="password2" style="outline: none; border: 0; width: 100%; cursor: text; color: #B59A72; font-family: scdream4; font-size: 20px;">
+          </div>
+          <div id="password2Warning" style="outline: none; font-family: scdream3; font-size: 12px; color: #DA0000; margin-top: 4px; height: 20px; display: none;"></div>
+        </div>
+        <div style="margin-top: 54px;">
+          <div style="outline: none; color: #B59A72; font-family: scdream4; font-size: 20px;">이름</div>
+          <div style="width: 568px; height: 60px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 10px; padding: 15px 18px;">
+            <!-- <div contenteditable="true" id="username" onKeyPress="javascript: if (event.keyCode==13) return false;" style="outline: none; cursor: text; color: #B59A72; font-family: scdream4; font-size: 20px;"></div> -->
+            <input name="first_name" id="firstName" style="outline: none; border: 0; width: 100%; cursor: text; color: #B59A72; font-family: scdream4; font-size: 20px;">
+          </div>
+          <div id="firstNameWarning" style="outline: none; font-family: scdream3; font-size: 12px; color: #DA0000; margin-top: 4px; height: 20px; display: none;"></div>
+        </div>
+        <div style="margin-top: 26px;">
+          <div style="outline: none; color: #B59A72; font-family: scdream4; font-size: 20px;">닉네임</div>
+          <div style="width: 568px; height: 60px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 10px; padding: 15px 18px;">
+            <!-- <div contenteditable="true" id="nickname" onKeyPress="javascript: if (event.keyCode==13) return false;" style="outline: none; cursor: text; color: #B59A72; font-family: scdream4; font-size: 20px;"></div> -->
+            <input name="nickname" id="nickname" style="outline: none; border: 0; width: 100%; cursor: text; color: #B59A72; font-family: scdream4; font-size: 20px;">
+          </div>
+          <div id="nicknameWarning" style="outline: none; font-family: scdream3; font-size: 12px; color: #DA0000; margin-top: 4px; height: 20px; display: none;"></div>
+        </div>
+        <div style="margin-top: 26px;">
+          <div style="outline: none; color: #B59A72; font-family: scdream4; font-size: 20px;">전화번호</div>
+          <div style="width: 568px; height: 60px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 10px; padding: 15px 18px;">
+            <!-- <div contenteditable="true" id="phoneNumber" onKeyPress="return keypressNumber(event)" style="outline: none; cursor: text; color: #B59A72; font-family: scdream4; font-size: 20px;"></div> -->
+            <input name="phoneNum" id="phoneNum" style="outline: none; border: 0; width: 100%; cursor: text; color: #B59A72; font-family: scdream4; font-size: 20px;">
+          </div>
+          <div id="phoneNumWarning" style="outline: none; font-family: scdream3; font-size: 12px; color: #DA0000; margin-top: 4px; height: 20px; display: none;"></div>
+        </div>
+        <button type="submit" id="enrollUser" style="cursor: pointer; margin-top: 56px; width: 568px; height: 106px; background: #B59A72 0% 0% no-repeat padding-box; border: 1px solid #707070; border-radius: 10px; padding: 32px 225px; font-size: 30px; font-family: scdream5; color: #FAF3D9;">가입하기</button>
+      </form>
     </div>
   </body>
   <script>
@@ -74,8 +89,139 @@
       }
     }
     $(document).ready(function() {
+      $.ajaxSetup({
+        headers: {
+          'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val()
+        }
+      });
       $('#main').click(function () {
         location.href = '/';
+      });
+      $("#username").on("propertychange change keyup paste input", function() {
+        var result;
+        // TODO: front에서 해결하도록 수정(너무 느림)
+        $.ajax({
+          data: {username: $('#username').val()},
+          type: 'POST',
+          url: '{% url "accounts:check_user_info" %}',
+          dataType: 'json',
+          async: false,
+          success: function(data) {
+            result = data
+          }
+        });
+        console.log(result)
+        if (result.valid == false) {
+          $('#idWarning').text(result.message);
+          $('#idWarning').show();
+        } else {
+          $('#idWarning').hide();
+        }
+      });
+      $("#password1").on("propertychange change keyup paste input", function() {
+        var result;
+        // TODO: front에서 해결하도록 수정(너무 느림)
+        $.ajax({
+          data: {password1: $('#password1').val()},
+          type: 'POST',
+          url: '{% url "accounts:check_user_info" %}',
+          dataType: 'json',
+          async: false,
+          success: function(data) {
+            result = data
+          }
+        });
+        console.log(result)
+        if (result.valid == false) {
+          $('#password1Warning').text(result.message);
+          $('#password1Warning').show();
+        } else {
+          $('#password1Warning').hide();
+        }
+      });
+      $("#password2").on("propertychange change keyup paste input", function() {
+        var result;
+        // TODO: front에서 해결하도록 수정(너무 느림)
+        $.ajax({
+          data: {password1: $('#password1').val(), password2: $('#password2').val()},
+          type: 'POST',
+          url: '{% url "accounts:check_user_info" %}',
+          dataType: 'json',
+          async: false,
+          success: function(data) {
+            result = data
+          }
+        });
+        console.log(result)
+        if (result.valid == false) {
+          $('#password2Warning').text(result.message);
+          $('#password2Warning').show();
+        } else {
+          $('#password2Warning').hide();
+        }
+      });
+      $("#firstName").on("propertychange change keyup paste input", function() {
+        var result;
+        // TODO: front에서 해결하도록 수정(너무 느림)
+        $.ajax({
+          data: {firstName: $('#firstName').val()},
+          type: 'POST',
+          url: '{% url "accounts:check_user_info" %}',
+          dataType: 'json',
+          async: false,
+          success: function(data) {
+            result = data
+          }
+        });
+        console.log(result)
+        if (result.valid == false) {
+          $('#firstNameWarning').text(result.message);
+          $('#firstNameWarning').show();
+        } else {
+          $('#firstNameWarning').hide();
+        }
+      });
+      $("#nickname").on("propertychange change keyup paste input", function() {
+        var result;
+        // TODO: front에서 해결하도록 수정(너무 느림)
+        $.ajax({
+          data: {nickname: $('#nickname').val()},
+          type: 'POST',
+          url: '{% url "accounts:check_user_info" %}',
+          dataType: 'json',
+          async: false,
+          success: function(data) {
+            result = data
+          }
+        });
+        console.log(result)
+        if (result.valid == false) {
+          $('#nicknameWarning').text(result.message);
+          $('#nicknameWarning').show();
+        } else {
+          $('#nicknameWarning').hide();
+        }
+      });
+      $("#phoneNum").on("propertychange change keyup paste input", function() {
+        var result;
+        // TODO: front에서 해결하도록 수정(너무 느림)
+        $.ajax({
+          data: {phoneNum: $('#phoneNum').val()},
+          type: 'POST',
+          url: '{% url "accounts:check_user_info" %}',
+          dataType: 'json',
+          async: false,
+          success: function(data) {
+            result = data
+          }
+        });
+        console.log(result)
+        if (result.valid == false) {
+          $('#phoneNumWarning').text(result.message);
+          $('#phoneNumWarning').show();
+        } else {
+          $('#phoneNumWarning').hide();
+        }
       });
     });
   </script>
