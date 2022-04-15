@@ -1,23 +1,29 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
-<div style="margin-top: 24px; width: 624px; height: 484px; background: #DDC8A8 0% 0% no-repeat padding-box; border: 1px solid #B59A72; border-radius: 10px;">
-  <div style="margin: 26px 262px; width: 100px; height: 34px; font-family: scdream8; font-size: 24px; color: #342615">내 프로필</div>
-  <div style="margin: 30px 236px; width: 150px; height: 150px; outline: none"><img src="{% static 'media/logos/logo.png' %}" style="width: 150px; height: 150px;" alt=""></div>
-  <div style="margin: 10px 112px; display: flex; justify-content: start;">
-    <div style="width: 100px; height: 28px; font-family: scdream6; font-size: 24px; color: #342615; text-align: center;">아이디</div>
-    <div style="width: 300px; height: 28px; font-family: scdream4; font-size: 24px; color: #342615; text-align: left;">qwerty</div>
+<div style="position: relative; margin: 51px auto; width: 480px; height: 400px; background: #DDC8A8 0% 0% no-repeat padding-box; border: 1px solid #B59A72; border-radius: 10px;">
+  <div style="margin: 12px 198px; width: 84px; height: 28px; font-family: scdream8; font-size: 20px; color: #342615">내 프로필</div>
+  <div style="margin: 20px 165px; width: 150px; height: 150px; outline: none"><img src="{% static 'media/logos/logo.png' %}" style="width: 150px; height: 150px;" alt=""></div>
+  <div style="margin: 32px 40px 0px 40px; display: flex; justify-content: start;">
+    <div style="width: 100px; height: 28px; font-family: scdream6; font-size: 18px; color: #342615; text-align: center;">아이디</div>
+    <div style="width: 300px; height: 28px; font-family: scdream4; font-size: 18px; color: #342615; text-align: left;">{{ user.username }}</div>
   </div>
-  <div style="margin: 10px 112px; display: flex; justify-content: start;">
-    <div style="width: 100px; height: 28px; font-family: scdream6; font-size: 24px; color: #342615; text-align: center;">닉네임</div>
-    <div style="width: 300px; height: 28px; font-family: scdream4; font-size: 24px; color: #342615; text-align: left;">닉네임어쩌라고저쩌라고</div>
+  <div style="margin: 18px 40px; display: flex; justify-content: start;">
+    <div style="width: 100px; height: 28px; font-family: scdream6; font-size: 18px; color: #342615; text-align: center;">닉네임</div>
+    <div style="width: 300px; height: 28px; font-family: scdream4; font-size: 18px; color: #342615; text-align: left;">{{ user.nickname }}</div>
   </div>
-  <div id="signOut" style="cursor: pointer; margin: 60px 242px 0 242px; font-family: scdream4; font-size: 18px; color: #342615; text-align: center;">로그아웃</div>
+  <div style="margin: 40px 95px 0 95px; display: flex; justify-content: start;">
+    <div id="updateUser" style="cursor: pointer; width: 140px; margin-right: 10px; font-family: scdream4; font-size: 14px; color: #342615; text-align: center;">회원정보 수정</div>
+    <div id="signOut" style="cursor: pointer; width: 140px; font-family: scdream4; font-size: 14px; color: #342615; text-align: center;">로그아웃</div>
+  </div>
 </div>
 <script>
   $(document).ready(function () {
+    $('#updateUser').click(function () {
+      location.href = '/accounts/update'
+    });
     $('#signOut').click(function() {
-      console.log('logout');
+      location.href = '/accounts/signOut';
     });
   });
 </script>

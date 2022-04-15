@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<div style="position: relative; margin: 45px auto; width: 480px;">
+  <div style="width: 480px; height: 70px; padding: 18px 0px; background: #DDC8A8 0% 0% no-repeat padding-box; border: 1px solid #704400; text-align: center; font-family: scdream6; font-size: 20px; color: #6C4B24;">회원정보 수정</div>
+  <form style="margin-top: 30px;" method="POST" name="userInfo" onsubmit="return false;">
+    {% csrf_token %}
+    <div>
+      <div style="outline: none; color: #6C4B24; font-family: scdream5; font-size: 14px;">아이디</div>
+      <div style="width: 480px; height: 52px; background: #D1C5B5 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 2px; padding: 15px 18px;">
+        <input name="username" id="username" style="cursor: default; outline: none; background-color: transparent; border: 0; width: 100%; color: #704400; font-family: scdream4; font-size: 16px;" value="{{ user.username }}" disabled>
+      </div>
+    </div>
+    <div style="margin-top: 20px;">
+      <div style="outline: none; color: #6C4B24; font-family: scdream5; font-size: 14px;">비밀번호</div>
+      <div style="width: 480px; height: 52px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 2px; padding: 15px 18px;">
+        <input name="password1" type="password" id="password1" style="outline: none; border: 0; width: 100%; cursor: text; color: #704400; font-family: scdream4; font-size: 16px;">
+      </div>  
+      <div id="password1Warning" style="outline: none; font-family: scdream3; font-size: 12px; color: #DA0000; margin-top: 4px; height: 20px; display: none;"></div>
+    </div>
+    <div style="margin-top: 20px;">
+      <div style="outline: none; color: #6C4B24; font-family: scdream5; font-size: 14px;">비밀번호 확인</div>
+      <div style="width: 480px; height: 52px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 2px; padding: 15px 18px;">
+        <input name="password2" type="password" id="password2" style="outline: none; border: 0; width: 100%; cursor: text; color: #704400; font-family: scdream4; font-size: 16px;">
+      </div>
+      <div id="password2Warning" style="outline: none; font-family: scdream3; font-size: 12px; color: #DA0000; margin-top: 4px; height: 20px; display: none;"></div>
+    </div>
+    <div style="margin-top: 40px;">
+      <div style="outline: none; color: #6C4B24; font-family: scdream5; font-size: 14px;">이름</div>
+      <div style="width: 480px; height: 52px; background: #D1C5B5 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 2px; padding: 15px 18px;">
+        <input name="first_name" id="firstName" style="cursor: default; outline: none; background-color: transparent; border: 0; width: 100%; color: #704400; font-family: scdream4; font-size: 16px;" value="{{ user.first_name }}" disabled>
+      </div>
+    </div>
+    <div style="margin-top: 20px;">
+      <div style="outline: none; color: #6C4B24; font-family: scdream5; font-size: 14px;">닉네임</div>
+      <div style="width: 480px; height: 52px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 2px; padding: 15px 18px;">
+        <input name="nickname" id="nickname" style="outline: none; border: 0; width: 100%; cursor: text; color: #704400; font-family: scdream4; font-size: 16px;" value="{{ user.nickname }}">
+      </div>
+      <div id="nicknameWarning" style="outline: none; font-family: scdream3; font-size: 12px; color: #DA0000; margin-top: 4px; height: 20px; display: none;"></div>
+    </div>
+    <div style="margin-top: 20px;">
+      <div style="outline: none; color: #6C4B24; font-family: scdream5; font-size: 14px;">전화번호</div>
+      <div style="width: 480px; height: 52px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 2px; padding: 15px 18px;">
+        <input name="phoneNum" id="phoneNum" style="outline: none; border: 0; width: 100%; cursor: text; color: #704400; font-family: scdream4; font-size: 16px;" value="{{ user.phoneNum }}">
+      </div>
+      <div id="phoneNumWarning" style="outline: none; font-family: scdream3; font-size: 12px; color: #DA0000; margin-top: 4px; height: 20px; display: none;"></div>
+    </div>
+    <button id="updateUser" style="margin-top: 40px; width: 480px; height: 70; background: #B59A72 0% 0% no-repeat padding-box; border: 1px solid #707070; border-radius: 10px; padding: 20px 195px; font-size: 22px; font-family: scdream5; color: #FAF3D9;">수정하기</button>
+  </form>
+</div>
+<div id="successSignUpModal" class="modal fade" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="position: relative; top: 160px; margin: 0px auto; width: 300px; height: 160px; background: #60482C 0% 0% no-repeat padding-box; border: 4px solid #60482C; border-radius: 5px; opacity: 0.95;">
+      <div style="width: 22px; height: 22px; margin: 18px 135px 0px 135px;"><img style="width: 30px; height: 30px;" src="{% static 'media/icon/success_check.png' %}" alt=""></div>
+      <div style="margin: 20px 40px; width: 220px; height: 26px; text-align: center; font-family: scdream5; font-size: 16px; color: #FAF3D9;">회원수정이 완료되었습니다.</div>
+      <div id="updateButton" style="cursor: pointer; margin: 0px 86px; width: 110px; height: 26px; text-align: center; font-family: scdream5; font-size: 18px; color: #FDBD58;">메인으로 가기</div>
+    </div>
+  </div>
+</div>
+<script>
+  function keypressNumber(event){
+    var code = event.keyCode;
+    if ((code > 47 && code < 58) || code == 8 || code == 46 || code == 9 || code == 37 || code == 39){
+      //keycode 8: backspace, 46: delete, 9: tab, 37: <- , 39: ->
+      return true;
+    }else{
+      return false;
+    }
+  }
+  $(document).ready(function() {
+    $.ajaxSetup({
+      headers: {
+        'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val()
+      }
+    });
+    $('#main').click(function () {
+      location.href = '/';
+    });
+    var re;
+    var result;
+    $("#username").on("propertychange change keyup paste input", function() {
+      re = RegExp(/^(?=.*?[a-z0-9_])[a-z0-9_]{5,20}$/);
+      $.ajax({
+        data: {username: $('#username').val()},
+        type: 'POST',
+        url: '{% url "accounts:check_username" %}',
+        dataType: 'json',
+        async: false,
+        success: function(data) {
+          result = data
+        }
+      });
+      if (result.valid == false) {
+        $('#idWarning').text(result.message);
+        $('#idWarning').show();
+      } else if (re.test($('#username').val()) == false) {
+        $('#idWarning').text('5~20자의 영문 소문자, 숫자, 특수기호(_)만 사용 가능합니다.');
+        $('#idWarning').show();
+      } else {      
+        $('#idWarning').hide();
+      }
+    });
+    $("#password1").on("propertychange change keyup paste input", function() {
+      re = RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&_]{8,16}$/);
+      if (re.test($('#password1').val()) == false) {
+        $('#password1Warning').text('5~20자의 영문 소문자, 숫자, 특수기호(_)만 사용 가능합니다.');
+        $('#password1Warning').show();
+      } else {      
+        $('#password1Warning').hide();
+      }
+    });
+    $("#password2").on("propertychange change keyup paste input", function() {
+      if ($('#password1').val() != $('#password2').val()) {
+        $('#password2Warning').text('비밀번호가 일치하지 않습니다.');
+        $('#password2Warning').show();
+      } else {
+        $('#password2Warning').hide();
+      }
+    });
+    $("#firstName").on("propertychange change keyup paste input", function() {
+      re = RegExp(/^[가-힣A-Za-z]+$/);
+      if (re.test($('#firstName').val()) == false) {
+        $('#firstNameWarning').text('한글과 영어 대/소문자를 사용하세요. (특수기호, 공백 사용 불가)');
+        $('#firstNameWarning').show();
+      } else {
+        $('#firstNameWarning').hide();
+      }
+    });
+    $("#nickname").on("propertychange change keyup paste input", function() {
+      re = RegExp(/^(?=.*[A-Za-z가-힣0-9])[A-Za-z가-힣0-9]{4,10}$/);
+      $.ajax({
+        data: {nickname: $('#nickname').val()},
+        type: 'POST',
+        url: '{% url "accounts:check_nickname" %}',
+        dataType: 'json',
+        async: false,
+        success: function(data) {
+          result = data
+        },
+        error: function(xhr, status, error) {
+          console.log(error)
+        }
+      });
+      if (result.valid == false) {
+        $('#nicknameWarning').text(result.message);
+        $('#nicknameWarning').show();
+      } else if (re.test($('#nickname').val()) == false) {
+        $('#nicknameWarning').text("4~10자의 한글, 영문 대/소문자, 숫자를 사용하세요.");
+        $('#nicknameWarning').show();
+      } else {
+        $('#nicknameWarning').hide();
+      }
+    });
+    $("#phoneNum").on("propertychange change keyup paste input", function() {
+      re = RegExp(/^[0-9]{11}$/);
+      if (re.test($('#phoneNum').val()) == false) {
+        $('#phoneNumWarning').text("형식에 맞지 않는 번호입니다.");
+        $('#phoneNumWarning').show();
+      } else {
+        $('#phoneNumWarning').hide();
+      }
+    });
+    $("#updateUser").click(function() {
+      if ($('#password1Warning').css('display') != 'none'|| $('#password1').val().length == 0) {
+        $('#password1Warning').text('5~20자의 영문 소문자, 숫자, 특수기호(_)만 사용 가능합니다.');
+        $('#password1Warning').show();
+        $('#password1').focus();
+      } else if ($('#password2Warning').css('display') != 'none'|| $('#password2').val().length == 0) {
+        $('#password2Warning').text('비밀번호가 일치하지 않습니다.');
+        $('#password2Warning').show();
+        $('#password2').focus();
+      } else if ($('#nicknameWarning').css('display') != 'none'|| $('#nickname').val().length == 0) {
+        if ($('#nickname').val() != '{{ user.nickname }}') {
+          $('#nicknameWarning').text("4~10자의 한글, 영문 대/소문자, 숫자를 사용하세요.");
+          $('#nicknameWarning').show();
+          $('#nickname').focus();
+        }
+      } else if ($('#phoneNumWarning').css('display') != 'none'|| $('#phoneNum').val().length == 0) {
+        $('#phoneNumWarning').text("형식에 맞지 않는 번호입니다.");
+        $('#phoneNumWarning').show();
+        $('#phoneNum').focus();
+      } else {
+        $.ajax({
+          data: $('form[name=userInfo]').serialize(),
+          type: 'POST',
+          url: '{% url "accounts:update" %}',
+          dataType: 'json',
+          async: false,
+          success: function(data) {
+            result = data
+          },
+          error: function(xhr, status, error) {
+            console.log(error)
+          }
+        });
+        if (result.valid) {
+          var modal = new bootstrap.Modal(document.getElementById('successSignUpModal'), {
+            Keyboard: false,
+            backdrop: 'static',
+          });
+          modal.toggle();
+        }
+      }
+    });
+    $('#updateButton').on('click', function () {
+      location.href = '/';
+    });
+  });
+</script>
+{% endblock %}

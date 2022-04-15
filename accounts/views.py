@@ -1,29 +1,59 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from django.contrib.auth import authenticate, login, logout
 from .models import User
 import re
 
 # Create your views here.
 def signIn(request):
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            return JsonResponse({'valid': True})
+        user = authenticate(username=request.POST.get('username'), password=request.POST.get('password'))
+        if not user:
+            return JsonResponse({'valid': False})
+        login(request, user)
+        return JsonResponse({'valid': True})
     return render(request, 'accounts/signIn.html')
 
 def signUp(request):
     if request.method == "POST":
-        result = check_info(request.POST)
-        # print(result['valid'])
+        result = check_info(request.POST, 'signup')
         if result['valid']:
-            pass
-        else:
-            return redirect('accounts:signUp')
-    return render(request, 'accounts/userInfo.html')
-    # return render(request, 'accounts/userInfo.html', {'form': form})
+            user = User()
+            user.username = request.POST.get('username')
+            user.set_password(request.POST.get('password1'))
+            user.first_name = request.POST.get('first_name')
+            user.nickname = request.POST.get('nickname')
+            user.phoneNum = request.POST.get('phoneNum')
+            user.save()
+        return JsonResponse(result)
+    return render(request, 'accounts/signUp.html')
+
 
 def profile(request):
-    return render(request, 'accounts/profile.html')
+    return render(request, 'accounts/profile.html', {'user': request.user})
 
-def check_info(data):
-    if 'username' in data.keys():
+def update(request):
+    if request.method == 'POST':
+        result = check_info(request.POST, 'update')
+        user = User.objects.filter(username=request.user.username).first()
+        if result['valid']:
+            user.set_password(request.POST.get('password1'))
+            user.nickname = request.POST.get('nickname')
+            user.phoneNum = request.POST.get('phoneNum')
+            user.save()
+            login(request, user)
+        return JsonResponse(result)
+    return render(request, 'accounts/update.html', {'user': request.user})
+
+def signOut(request):
+    logout(request)
+    return redirect('accounts:signIn')
+
+def check_info(data, method):
+    if method == 'signup' and 'username' in data.keys():
         username = data.get('username')
         if User.objects.filter(username=username).count() > 0 and len(username) > 0:
             return {'valid': False, 'message': '이미 존재하는 아이디입니다.'}
@@ -40,7 +70,7 @@ def check_info(data):
         password2 = data.get('password2')
         if password1 != password2:
             return {'valid': False, 'message': '비밀번호가 일치하지 않습니다.'}
-    if 'firstName' in data.keys():
+    if method == 'signup' and 'firstName' in data.keys():
         first_name = data.get('firstName')
         if not re.search('^[가-힣A-Za-z]+$', first_name):
             return {'valid': False, 'message': '한글과 영어 대/소문자를 사용하세요. (특수기호, 공백 사용 불가)'}
@@ -55,6 +85,20 @@ def check_info(data):
         
     return {'valid': True}
 
+
+@require_POST
+def check_username(request):
+    username = request.POST.get('username')
+    if User.objects.filter(username=username).count() > 0 and len(username) > 0:
+        return JsonResponse({'valid': False, 'message': '이미 존재하는 아이디입니다.'})
+    return JsonResponse({'valid': True})
+
+@require_POST
+def check_nickname(request):
+    nickname = request.POST.get('nickname')
+    if User.objects.filter(nickname=nickname).count() > 0 and len(nickname) > 0:
+        return JsonResponse({'valid': False, 'message': '4~10자의 한글, 영문 대/소문자, 숫자를 사용하세요.'})
+    return JsonResponse({'valid': True})
 
 @require_POST
 def check_user_info(request):
@@ -89,3 +133,9 @@ def check_user_info(request):
             return JsonResponse({'valid': False, 'message': '형식에 맞지 않는 번호입니다.'})
         
     return JsonResponse({'ret': True})
+
+@require_POST
+def confirm_authenticate(request):
+    if request.user.is_authenticated:
+        return JsonResponse({'valid': True})
+    return JsonResponse({'valid': False})

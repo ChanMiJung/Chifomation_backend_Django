@@ -21,30 +21,59 @@
     <link rel="stylesheet" href="https://unpkg.com/@egjs/flicking/dist/flicking.css" crossorigin="anonymous" />
     <title>치포메이션</title>
     <style>
-      [placeholder]:empty:before {
-        display: block;
-        content: attr(placeholder);
-        color: #B59A72;
+      input::placeholder {
+        color: #704400;
+        font-family: scdream4;
+        font-size: 16px;
       }
     </style>
   </head>
-  <body style="cursor: default; background-color: #FAF3D9; position: relative; max-width: 720px; margin: 0px auto;">
-    <div style="width: 624px; height: 496px; margin: 188px 48px; background: #B59A72 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px;">
-      <div id="main" style="cursor: pointer; margin: 40px 180px;"><img src="{% static 'media/logos/main_logo.png' %}" style="width:264px;" alt=""></div>
-      <div style="width: 560px; height: 60px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin: 0px 32px; padding: 15px 18px;">
-        <div contenteditable="true" id="loginId" onKeyPress="javascript: if (event.keyCode==13) return false;" style="outline: none; cursor: text; color: #B59A72; font-family: scdream4; font-size: 20px;" placeholder="아이디"></div>
+  <body style="cursor: default; background-color: #FAF3D9;">
+    <div style="position: relative; max-width: 720px; margin: 0px auto;">
+      <div style="width: 512; height: 406px; margin: 100px 104px 0px 104px; background: #DDC8A8 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px;">
+        <div id="main" style="cursor: pointer; margin: 27px 146px;"><img src="{% static 'media/logos/main_logo.png' %}" style="width:220px;" alt=""></div>
+        <form method="POST" name="signInInfo" action="return false;">
+          {% csrf_token %}
+          <div style="width: 396px; height: 52px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin: 26px 58px; padding: 14px 12px;">
+            <!-- <div contenteditable="true" id="loginId" onKeyPress="javascript: if (event.keyCode==13) return false;" style="outline: none; cursor: text; color: #704400; font-family: scdream4; font-size: 16px;" placeholder="아이디"></div> -->
+            <input name="username" id="username" style="outline: none; border: 0; cursor: text; color: #704400; font-family: scdream4; font-size: 16px; width: 100%;" placeholder="아이디">
+          </div>
+          <div style="width: 396px; height: 52px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin: 0px 58px; padding: 14px 12px;">
+            <!-- <div contenteditable="true" id="loginPwd" onKeyPress="javascript: if (event.keyCode==13) return false;" style="outline: none; cursor: text; color: #704400; font-family: scdream4; font-size: 16px;" placeholder="비밀번호"></div> -->
+            <input name="password" id="password" type="password" style="outline: none; border: 0; cursor: text; color: #704400; font-family: scdream4; font-size: 16px; width: 100%;" placeholder="비밀번호">
+          </div>
+        </form>
+        <div id="loginUser" style="cursor: pointer; margin: 42px 58px 0 58px; width: 396px; height: 70px; background: #B59A72 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; padding: 21px 168px; font-size: 20px; font-family: scdream5; color: #FAF3D9;">로그인</div>
+        <div id="enrollUser" style="cursor: pointer; margin: 6px 229px; width: 54px; height: 20px; font-family: scdream4; font-size: 14px; color: #60482C;">회원가입</div>
       </div>
-      <div style="width: 560px; height: 60px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin: 24px 32px; padding: 15px 18px;">
-        <div contenteditable="true" id="loginPwd" onKeyPress="javascript: if (event.keyCode==13) return false;" style="outline: none; cursor: text; color: #B59A72; font-family: scdream4; font-size: 20px;" placeholder="비밀번호"></div>
-      </div>
-      <div id="loginUser" style="cursor: pointer; margin: 58px 110px 0 110px; width: 402px; height: 78px; background: #704400 0% 0% no-repeat padding-box; border: 1px solid #707070; border-radius: 10px; padding: 18px 156px; font-size: 30px; font-family: scdream5; color: #FAF3D9;">로그인</div>
-      <div id="enrollUser" style="cursor: pointer; margin: 6px 272px; width: 78px; height: 28px; font-family: scdream4; font-size: 20px;">회원가입</div>
     </div>
   </body>
   <script>
     $(document).ready(function() {
+      $.ajaxSetup({
+        headers: {
+          'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val()
+        }
+      });
+      var result;
       $('#loginUser').click(function() {
-        console.log('login');
+        $.ajax({
+          data: $('form[name=signInInfo]').serialize(),
+          type: 'POST',
+          url: '{% url "accounts:signIn" %}',
+          dataType: 'json',
+          async: false,
+          success: function(data) {
+            result = data
+            console.log(result)
+          },
+          error: function(xhr, status, error) {
+            console.log(error)
+          }
+        });
+        if (result.valid) {
+          location.href = '/';
+        }
       });
       $('#enrollUser').click(function() {
         location.href = '/accounts/signUp';
