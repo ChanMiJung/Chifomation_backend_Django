@@ -1,0 +1,24 @@
+{% load static %}
+<div id="comment_item{{comment.id}}" style="max-width: 624px; background-color: #B59A72; min-height: 126px; padding: 16px 10px; margin-bottom: 1px;">
+  <div style="display:flex; justify-content: space-between;">
+    <div style="height: 24px; font-family: scdream5; color: #60482C;">{{ comment.user.username }}</div>
+    <div style="display: flex; justify-content: start;">
+    </div>
+  </div>
+  <div style="display: flex; justify-content: start;">
+    <span>
+      {% for i in star_range %}
+      {% if comment.star >= i %}
+      <img src="{% static 'media/icon/yellow_star.png' %}" alt="" style="float: left; width: 20px;">
+      {% else %}
+      <img src="{% static 'media/icon/gray_star.png' %}" alt="" style="float: left; width: 20px;">
+      {% endif %}
+      {% endfor %}
+    </span>
+    <span style="margin-left: 4px; padding-bottom: 2px; font-family: scdream4; font-size: 12px; color: #FAF3D9;">2022.04.03</span>
+  </div>
+  <div style="font-family: scdream4; color: #FAF3D9; font-size: 16px;">
+    {{ comment.content }}
+  </div>
+</div>
+  

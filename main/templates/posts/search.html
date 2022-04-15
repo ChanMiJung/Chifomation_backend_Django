@@ -13,10 +13,11 @@
 </style>
 {% endblock %}
 {% block body %}
+<div id="loading_img" style="display: none;"><img src="{% static 'media/icon/loading.png' %}" alt=""></div>
 <div style="display: flex; justify-content: space-between;  max-width: 624px; height: 36px; background: #B59A72 0% 0% no-repeat padding-box; border-radius: 20px; padding: 6px 10px;">
   <div style="margin-top: 2px; margin-right: 6px; width: 20px; height: 20px;"><img style="width: 20px; height: 20px; vertical-align: top;" src="{% static 'media/icon/search.png' %}" alt=""></div>
   <div contenteditable="true" id="mainSearch" onKeyPress="javascript: if (event.keyCode==13) return false;" style="outline: none; cursor: text; color: #FEFBF1; width: 550px; height: 24px; margin-right: 12px;" placeholder="치킨, 브랜드 이름을 검색해보세요">{{ search_parameter }}</div>
-  <div id="resetSearch" style="cursor: pointer; width: 16px; height: 16px;">X</div>
+  <div id="resetSearch" style="cursor: pointer; width: 16px; height: 16px; margin-top: 4px;"><img style="width: 16px; height: 16px;vertical-align: top;" src="{% static 'media/icon/cancel.png' %}" alt=""></div>
 </div>
 <div style="margin-top: 20px; display: flex; justify-content: start;">
   <div style="width: 24px; height: 24px; margin: 2px 4px 2px 0;"><img src="{% static 'media/icon/thumb_up.png' %}" style="width: 24px; height: 24px;" alt=""></div>
@@ -68,31 +69,16 @@
   </div>
 </div>
 {% endif %}
-<div style="margin-top: 18px;">
+<div class="chicken-list" style="margin-top: 18px;">
   {% for chicken in chickens %}
-  <div class="chicken-item" style="cursor: pointer; width: 624px; height: 180px; margin: 8px 0; display: flex; justify-content: start;">
-    <input type="hidden" id="chickenId" value="{{ chicken.id }}">
-    <div style="width: 320px; height: 180px; background: #FFFFFF 0% 0% no-repeat padding-box;">
-      <img src="{% static 'media/chickens/bhc/havanero_poteking_fride.png' %}" style="width: 320px; height: 180px;" alt="...">
-    </div>
-    <div style="width: 304px; height: 180px; background: #B59A72 0% 0% no-repeat padding-box; padding: 16px 12px;">
-      <div style="font-family: scdream7; font-size: 20px; color: #553300; word-break: keep-all;">{{ chicken.name }}</div>
-      <div style="display: flex; justify-content: start;">
-        <span>
-          {% if chicken.score > 0 %}
-          <img src="{% static 'media/icon/yellow_star.png' %}" alt="" style="width: 18px;">
-          {% else %}
-          <img src="{% static 'media/icon/gray_star.png' %}" alt="" style="width: 18px;">
-          {% endif %}
-        </span>
-        <span style="font-family: scdream5; font-size: 18px; color: #6C4B24; padding-top: 2px; padding-left: 2px;">{{ chicken.score }}</span>
-      </div>
-      <div style="margin-top: 7px; width:281px; max-height: 70px; font-family: scdream5; font-size: 16px; word-break: keep-all;">{{ chicken.introduction }}</div>
-      <div style="margin-top: 4px; font-family: scdream5; font-size: 14px; height: 19px; color: #FEFBF1;">{{ chicken.cost }}원</div>
-    </div>
-  </div>
-  {% endfor %}  
+    {% include 'posts/chicken-item.html'%}
+  {% endfor %}
 </div>
+{% if not end_pagination %}
+  <div id="moreChickens" style="cursor: pointer; margin: 26px auto 0 auto; width: 400px; height: 38px; background: #FDBD58 0% 0% no-repeat padding-box; border-radius: 5px; padding: 6px 100px;">
+    <div style="cursor: pointer; font-family: scdream5; font-size: 18px; color: #FEFBF1; text-align: center;">더 많은 검색 결과 보기</div>
+  </div>
+{% endif %}
 <script>
   const flicking = new Flicking("#hashTagCarousel", {
     align: "prev",
@@ -114,10 +100,55 @@
     });
     $(".category-item").each(function() {
       $(this).click(function() {
+        $.ajax({
+          type: 'GET',
+          url: window.location.pathname,
+          data: {
+            'search': '{{search_parameter}}',
+            'category': $(this)[0].innerText.trim(),
+            'sub_menu': '{{sub_menu}}',
+            'page': 1,
+          },
+          success: function(data) {
+            console.log(data);
+            if (data.end_pagination === true) {
+              $('#moreChickens').hide();
+            }
+            $('.chicken-list').empty();
+            $('.chicken-list').append(data.content);
+          }
+        });
         $(this).addClass("selected");
         $(this).siblings().removeClass("selected")
       });
     });
+    
+    var page = 1;
+    var block_request = false;
+    var end_pagination = false;
+    $('#moreChickens').click(function() {
+      block_request = true;
+      page += 1;
+
+      $.ajax({
+        type: 'GET',
+        url: window.location.pathname,
+        data: {
+          'search': '{{search_parameter}}',
+          'page': page,
+        },
+        success: function (data) {
+          if (data.end_pagination === true) {
+            end_pagination = true;
+            $('#moreChickens').hide();
+          } else {
+            block_request = false;
+          }
+          $('.chicken-list').append(data.content);
+        }
+      });
+    });
+    
     $(".chicken-item").each(function() {
       $(this).click(function() {
         location.href = 'detail/'+ $('#chickenId').val().trim();

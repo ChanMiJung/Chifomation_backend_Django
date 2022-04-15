@@ -24,7 +24,7 @@
 <div style="display: flex; justify-content: space-between; margin-top: 16px; max-width: 624px; height: 36px; background: #B59A72 0% 0% no-repeat padding-box; border-radius: 20px; padding: 6px 10px;">
   <div style="margin-top: 2px; margin-right: 6px; width: 20px; height: 20px;"><img style="width: 20px; height: 20px; vertical-align: top;" src="{% static 'media/icon/search.png' %}" alt=""></div>
   <div contenteditable="true" id="mainSearch" onKeyPress="javascript: if (event.keyCode==13) return false;" style="outline: none; cursor: text; color: #FEFBF1; width: 550px; height: 24px; margin-right: 12px;" placeholder="치킨, 브랜드 이름을 검색해보세요">{{ search_parameter }}</div>
-  <div id="resetSearch" style="cursor: pointer; width: 16px; height: 16px;">X</div>
+  <div id="resetSearch" style="cursor: pointer; width: 16px; height: 16px; margin-top: 4px;"><img style="width: 16px; height: 16px;vertical-align: top;" src="{% static 'media/icon/cancel.png' %}" alt=""></div>
 </div>
 <div style="margin-top: 40px; display: flex; justify-content: start;">
   <div style="width: 30px; height: 30px; margin: 2px 4px 2px 0;"><img src="{% static 'media/icon/crown.png' %}" style="width: 30px; margin-bottom: 10px;" alt=""></div>
@@ -38,12 +38,17 @@
         <div class="carousel-item active">
           <div style="font-family: scdream8; text-align: center; color: #BC0000; font-size: 34px; margin: 16px 0px 5px 0px;">{{ brand.name }}</div>
           {% for chicken in brand.chickens %}
-          <div style="width: 580px; height: 160px; display: flex; justify-content: start; margin: 22px; border-radius: 20px; background-color: #FAF3D9;">
-            <div>
+          <div class="chicken-item" style="cursor: pointer; width: 580px; height: 160px; display: flex; justify-content: start; margin: 22px; border-radius: 20px; background-color: #FAF3D9;">
+            <input id="chickenId" type="hidden" value="{{ chicken.id }}">
+            <div style="text-align: center; border-radius: 20px 0 0 20px; background: #FFC757 0% 0% no-repeat padding-box; padding: 0 33px;">
               <img src="{{ chicken.img_url }}" style="width: 224px; height: 160px;" alt="...">
             </div>
-            <div></div>
-            {{ chicken.name }}
+            <div style="width: 260px; height: 130px; padding: 15px;">
+              <div style="width: 260px; height: 60px; text-align: center; word-break: keep-all; margin-bottom: 15px; font-family: scdream7; font-size: 24px; color: #704400;">{{ chicken.name }}</div>
+              {% for tag in chicken.tags %}
+                <div style="width: 260px; height: 28px; font-family: scdream5; font-size: 18px; color: #342615; text-align: center; margin-top: 2px;">{{ tag }}</div>
+              {% endfor %}
+            </div>
           </div>
           {% endfor %}
         </div>
@@ -83,15 +88,12 @@
   <div style="width: 624px; height: 142px; margin-bottom: 12px;">
     <img style="width: 100%;" src="{% static 'media/banners/banner_new.png' %}" alt="">
   </div>
-  <div style="margin: 12px 0; width: 624px; height: 56px; background: #B19C7B 0% 0% no-repeat padding-box; padding: 14px 8px;">
-    <div style="font-family: scdream5; font-size:20px; color: #FEFBF1;">굽네치킨 불금치킨</div>
+  {% for chicken in new_chickens %}
+  <div class="new-chicken-item" style="cursor: pointer; margin: 12px 0; width: 624px; height: 56px; background: #B19C7B 0% 0% no-repeat padding-box; padding: 14px 8px;">
+    <input id="newChickenId" type="hidden" value="{{chicken.id}}">
+    <div style="font-family: scdream5; font-size:20px; color: #FEFBF1;">{{chicken.brand.name}} {{chicken.name}}</div>
   </div>
-  <div style="margin: 12px 0; width: 624px; height: 56px; background: #B19C7B 0% 0% no-repeat padding-box; padding: 14px 8px;">
-    <div style="font-family: scdream5; font-size:20px; color: #FEFBF1;">BHC 포테킹</div>
-  </div>
-  <div style="margin: 12px 0; width: 624px; height: 56px; background: #B19C7B 0% 0% no-repeat padding-box; padding: 14px 8px;">
-    <div style="font-family: scdream5; font-size:20px; color: #FEFBF1;">자담치킨 불패치킨</div>
-  </div>
+  {% endfor %}
 </div>
 <div style="margin-top: 40px; display: flex; justify-content: start;">
   <div style="width: 30px; height: 30px; margin: 2px 4px 2px 0;"><img src="{% static 'media/icon/review.png' %}" style="width: 30px; margin-bottom: 10px;" alt=""></div>
@@ -103,74 +105,37 @@
     <!-- Camera element -->
     <div class="flicking-camera" style="height: 25rem;">
       <!-- Panels, class names are your choice -->
-      <div class="panel" style="margin: 0 17px;">
+      {% for comment in comments %}
+      <div class="comment-chicken-item" class="panel" style="cursor: pointer; margin: 0 17px;">
+        <input type="hidden" id="commentChickenId" value="{{comment.chicken.id}}">
         <div class="shadow" style="width: 250px; height: 400px; background: #DDC8A8 0% 0% no-repeat padding-box; box-shadow: 0px 10px 10px #613E0029; border-radius: 20px; padding: 16px;">
           <div>
             <img style="width: 218px; height: 136px;" src="{% static 'media/chickens/bhc/havanero_poteking_fride.png' %}" class="card-img-top" alt="...">
           </div>
-          <div style="font-family: scdream7; font-size: 24px; margin-top: 8px; color: #704400;">굽네치킨</div>
-          <div style="font-family: scdream5; font-size: 20px; margin-top: 8px; color: #BC0000;">고추바사삭</div>
+          <div style="font-family: scdream7; font-size: 24px; margin-top: 8px; color: #704400;">{{comment.chicken.brand.name}}</div>
+          <div style="font-family: scdream5; font-size: 20px; margin-top: 8px; color: #BC0000;">{{comment.chicken.name}}</div>
           <div style="display: flex; justify-content: start; margin-top: 8px;">
+            {% for i in star_range %}
+            {% if comment.star >= i%}
             <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
-            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
-            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
-            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
-            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
-          </div>
-          <div style="margin-top: 10px; width: 218px; height: 90px; word-break: break-all; font-family: scdream5; font-size: 16px;">
-            치킨에서 약간 탄두리 치킨 맛이 나요. 고블링, 마블링 소스에 찍어 먹으면 더 맛있어요!
-          </div>
-          <div style="margin-top: 1px; width: 218px; height: 24px; font-family: scdream5; font-size: 16px; color: #60482C;">by.굽네굽네아니오</div>
-        </div>
-      </div>
-      <div class="panel" style="margin: 0 17px;">
-        <div class="shadow" style="width: 250px; height: 400px; background: #DDC8A8 0% 0% no-repeat padding-box; box-shadow: 0px 10px 10px #613E0029; border-radius: 20px; padding: 16px;">
-          <div>
-            <img style="width: 218px; height: 136px;" src="{% static 'media/chickens/bhc/havanero_poteking_fride.png' %}" class="card-img-top" alt="...">
-          </div>
-          <div style="font-family: scdream7; font-size: 24px; margin-top: 8px; color: #704400;">굽네치킨</div>
-          <div style="font-family: scdream5; font-size: 20px; margin-top: 8px; color: #BC0000;">볼케이노</div>
-          <div style="display: flex; justify-content: start; margin-top: 8px;">
-            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
-            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
-            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
-            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
+            {% else %}
             <img src="{% static 'media/icon/empty_star.png' %}" alt="" style="width: 22px;">
+            {% endif %}
+            {% endfor %}
           </div>
           <div style="margin-top: 10px; width: 218px; height: 90px; word-break: break-all; font-family: scdream5; font-size: 16px;">
-            저에겐 살짝 맵지만, 불맛이 강하게 나서 좋아요. 치밥으로 강추합니다. bb
+            {{ comment.content}}
           </div>
-          <div style="margin-top: 1px; width: 218px; height: 24px; font-family: scdream5; font-size: 16px; color: #60482C;">by.볼케이노처돌이</div>
+          <div style="margin-top: 1px; width: 218px; height: 24px; font-family: scdream5; font-size: 16px; color: #60482C;">by.{{comment.user.nickname}}</div>
         </div>
       </div>
-      <div class="panel" style="margin: 0 17px;">
-        <div class="shadow" style="width: 250px; height: 400px; background: #DDC8A8 0% 0% no-repeat padding-box; box-shadow: 0px 10px 10px #613E0029; border-radius: 20px; padding: 16px;">
-          <div>
-            <img style="width: 218px; height: 136px;" src="{% static 'media/chickens/bhc/havanero_poteking_fride.png' %}" class="card-img-top" alt="...">
-          </div>
-          <div style="font-family: scdream7; font-size: 24px; margin-top: 8px; color: #704400;">굽네치킨</div>
-          <div style="font-family: scdream5; font-size: 20px; margin-top: 8px; color: #BC0000;">갈비천왕</div>
-          <div style="display: flex; justify-content: start; margin-top: 8px;">
-            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
-            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
-            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
-            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
-            <img src="{% static 'media/icon/black_star.png' %}" alt="" style="width: 22px;">
-          </div>
-          <div style="margin-top: 10px; width: 218px; height: 90px; word-break: break-all; font-family: scdream5; font-size: 16px;">
-            갈비와 치킨의 만남! 어색할 줄 알았는데, 맛있는거 + 맛있는거 = 왕맛있는거 입니다. 추라이추라이~
-          </div>
-          <div style="margin-top: 1px; width: 218px; height: 24px; font-family: scdream5; font-size: 16px; color: #60482C;">by.웅치킨</div>
-        </div>
-      </div>
+      {% endfor %}
     </div>
   </div>
 </div>
 <br>
 <br>
 <script>
-  // import Flicking from "@egjs/flicking";
-  // import "@egjs/flicking/dist/flicking.css";
 
   var myCarousel = document.querySelector('#mainCarousel')
   var carousel = new bootstrap.Carousel(myCarousel, {
@@ -179,7 +144,7 @@
   });
   const flicking = new Flicking("#carousel", {
     align: "prev",
-    circular: true,
+    circular: false,
     bound: true,
     renderOnlyVisible: true
   });
@@ -206,7 +171,21 @@
     });
     $(".chicken-item").each(function() {
       $(this).click(function() {
-        location.href = 'detail/'+ $('#chickenId').val().trim();
+        console.log($(this).children('#chickenId').val());
+        location.href = 'detail/'+ $(this).children('#chickenId').val().trim();
+      });
+    });
+
+    $('.new-chicken-item').each(function() {
+      $(this).click(function() {
+        console.log($(this))
+        location.href = 'detail/'+ $(this).children('#newChickenId').val().trim();
+      });
+    });
+
+    $('.comment-chicken-item').each(function() {
+      $(this).click(function() {
+        location.href = 'detail/' + $(this).children('#commentChickenId').val().trim();
       });
     });
   });

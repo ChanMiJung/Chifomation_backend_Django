@@ -23,10 +23,11 @@
     <title>치포메이션</title>
   </head>
   <body style="cursor: default; background-color: #FAF3D9; position: relative; max-width: 720px; margin: 0px auto;">
+    {% csrf_token %}
     <div style="position: relative; max-width: 624px; margin: 0px auto; display: flex; justify-content: space-between; margin-top:15px;">
       <div id="mainNavButton" style="cursor:pointer; margin-top: 5px;"><img src="{% static 'media/icon/menu.png' %}" style="width:26px;" alt=""></div>
       <button type="button" onclick="location.href='/'" style="background-color:transparent; border: 0; outline: 0;"><img src="{% static 'media/logos/main_logo.png' %}" style="width: 207px;" alt=""></button>
-      <div id="profile" style="margin-top: 9px; width: 28px; height: 28px; cursor: pointer;"><img src="{% static 'media/icon/profile.png' %}" style="width:28px;" alt=""></div>
+      <div id="profile" style="margin-top: 9px; width: 28px; height: 28px; cursor: pointer;"><img src="{% if user.is_anonymous %}{% static 'media/icon/off_profile.png' %}{% else %}{% static 'media/icon/on_profile.png' %}{% endif %}" style="width:28px;" alt=""></div>
     </div>
     <div id="mainNav" style="position: relative; display:none; width: 624px; height: 460px; margin: 12px auto; background-color: #B59A72; padding: 20px 12px;">
       <div style="display: flex; justify-content: start;">
@@ -60,6 +61,12 @@
   </body>
   <script>
     $(document).ready(function() {
+      var result;
+      $.ajaxSetup({
+        headers: {
+          'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val()
+        }
+      });
       $('#mainNavButton').click(function() {
         $('#mainNav').slideToggle();
       });
@@ -69,11 +76,25 @@
         });
       });
       $('#profile').click(function () {
-        location.href = '/accounts/signIn';
-        // location.href = '/accounts/profile';
+        $.ajax({
+          type: 'POST',
+          url: '{% url "accounts:confirm_authenticate" %}',
+          dataType: 'json',
+          async: false,
+          success: function(data) {
+            result = data
+            console.log(result)
+          },
+          error: function(xhr, status, error) {
+            console.log(error)
+          }
+        });
+        if (result.valid)
+          location.href = '/accounts/profile';
+        else
+          location.href = '/accounts/signIn';
       });
     });
-
   </script>
 </html>
 

@@ -1,0 +1,26 @@
+{% load static %}
+<div id="editReview" style="display:none; max-width: 624px; min-height: 194px; background-color: #B59A72; margin-bottom: 1px; padding: 10px;">
+    <div style="display: flex; justify-content: space-between;">
+      <div style="height: 24px; font-family: scdream5; font-size:16px; color: #60482C;">{{ user.nickname }}</div>
+      <div id="editReviewButton" style="cursor: pointer; width: 40px; height: 20px; font-family: scdream4; font-size: 16px; color: #FAF3D9;">수정</div>
+    </div>
+    <div style="display: flex; justify-content: start;">
+      <span>
+        <img id="reviewStar1" style="cursor: pointer; float: left; width: 18px;" src="{% static 'media/icon/gray_star.png' %}" alt="">
+        <img id="reviewStar2" style="cursor: pointer; float: left; width: 18px;" src="{% static 'media/icon/gray_star.png' %}" alt="">
+        <img id="reviewStar3" style="cursor: pointer; float: left; width: 18px;" src="{% static 'media/icon/gray_star.png' %}" alt="">
+        <img id="reviewStar4" style="cursor: pointer; float: left; width: 18px;" src="{% static 'media/icon/gray_star.png' %}" alt="">
+        <img id="reviewStar5" style="cursor: pointer; float: left; width: 18px;" src="{% static 'media/icon/gray_star.png' %}" alt="">  
+        {% for i in star_range %}
+        {% if comment.star >= i %}
+        <img id="editReviewStar{{i}}" src="{% static 'media/icon/yellow_star.png' %}" alt="" style="float: left; width: 20px;">
+        {% else %}
+        <img id="editReviewStar{{i}}" src="{% static 'media/icon/gray_star.png' %}" alt="" style="float: left; width: 20px;">
+        {% endif %}
+        {% endfor %}
+      </span>
+    </div>
+    <div style="margin-top: 8px; padding: 12px 10px; max-width: 600px; height: 118px; background-color: white; border: 1px solid #60482C;">
+      <textarea id="reviewtext" type="text" style="width: 100%; height: 94px; resize: none; border: 0;" placeholder="리뷰를 작성해주세요. (최대 500자)">{{comment.content}}</textarea>
+    </div>
+  </div>
