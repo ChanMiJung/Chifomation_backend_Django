@@ -14,13 +14,15 @@ def list(request):
     brands = []
     idx = 1
     new_chickens = []
+    new_count = 0
+    # popularity_chickens = []
+    popularity_count = 0
     for brand in brand_chickens:
         value = {
             'idx' : idx,
             'name' : brand.name,
             'chickens' : []
         }
-        count = 0
         for chicken in brand.chicken_set.all():
             if chicken.hash_tag:
                 tags = chicken.hash_tag.split(',')
@@ -28,13 +30,18 @@ def list(request):
                 for i in range(len(tags)):
                     tags[i] = '#' + tags[i]
                 chicken.tags = tags
-            value['chickens'].append(chicken)
+            
+            
             if len(new_chickens) < 3 and chicken.new:
                 new_chickens.append(chicken)
-
-            count += 1
-            if count == 3:
-                count = 0
+                new_count += 1
+            if len(value['chickens']) < 3 and chicken.popularity:
+                value['chickens'].append(chicken)
+                # popularity_chickens.append(chicken)
+                popularity_count += 1
+            if new_count == 3 and popularity_count == 3:
+                new_count = 0
+                popularity_count = 0
                 break
             
         brands.append(value)
