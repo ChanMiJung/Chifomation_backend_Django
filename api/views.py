@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import BrandSerializer, ChickenSerializer
-from .models import Brand, Chicken
+from .serializers import BrandSerializer, ChickenSerializer, CategorySerializer
+from .models import Brand, Chicken, Category
 
 # Create your views here.
 @api_view(['GET'])
@@ -19,6 +19,22 @@ def brand_insert(request):
         serializer.save()
         return Response(serializer.data, status = status.HTTP_201_CREATED)
     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def category_list(request):
+    brands = Category.objects.all()
+    serializer = CategorySerializer(brands, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def category_insert(request):
+    serializer = CategorySerializer(data = request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status = status.HTTP_201_CREATED)
+    return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+
 
 @api_view(['PUT'])
 def brand_update(request, brand_id):
