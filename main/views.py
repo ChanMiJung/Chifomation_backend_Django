@@ -41,8 +41,9 @@ def list(request):
         idx += 1
 
     # 회원님들의 리뷰
-    # TODO: 선택방법 정하기
-    comments = Comment.objects.all()[:5]
+    comments = Comment.objects.all()
+    if len(comments) > 10:
+        comments = comments[-10:]
 
     return render(request, 'posts/list.html', {'brands': brands, 'categories': categories, 'new_chickens': new_chickens, 'comments': comments, 'star_range': range(1, 6)})
 
