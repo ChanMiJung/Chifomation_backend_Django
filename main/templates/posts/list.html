@@ -41,7 +41,11 @@
           <div class="chicken-item" style="cursor: pointer; width: 580px; height: 160px; display: flex; justify-content: start; margin: 22px; border-radius: 20px; background-color: #FAF3D9;">
             <input id="chickenId" type="hidden" value="{{ chicken.id }}">
             <div style="text-align: center; border-radius: 20px 0 0 20px; background: #FFC757 0% 0% no-repeat padding-box; padding: 0 33px;">
+              {% if chicken.img_url %}
               <img src="{{ chicken.img_url }}" style="width: 224px; height: 160px;" alt="...">
+              {% else %}
+              <img src="{% static 'media/logos/logo.png' %}" style="width: 224px; height: 160px;" alt="...">
+              {% endif %}
             </div>
             <div style="width: 260px; height: 130px; padding: 15px;">
               <div style="width: 260px; height: 60px; text-align: center; word-break: keep-all; margin-bottom: 15px; font-family: scdream7; font-size: 24px; color: #704400;">{{ chicken.name }}</div>
@@ -59,7 +63,11 @@
           <div class="chicken-item" style="cursor: pointer; width: 580px; height: 160px; display: flex; justify-content: start; margin: 22px; border-radius: 20px; background-color: #FAF3D9;">
             <input id="chickenId" type="hidden" value="{{ chicken.id }}">
             <div style="text-align: center; border-radius: 20px 0 0 20px; background: #FFC757 0% 0% no-repeat padding-box; padding: 0 33px;">
+              {% if chicken.img_url %}
               <img src="{{ chicken.img_url }}" style="width: 224px; height: 160px;" alt="...">
+              {% else %}
+              <img src="{% static 'media/logos/logo.png' %}" style="width: 224px; height: 160px;" alt="...">
+              {% endif %}
             </div>
             <div style="width: 260px; height: 130px; padding: 15px;">
               <div style="width: 260px; height: 60px; text-align: center; word-break: keep-all; margin-bottom: 15px; font-family: scdream7; font-size: 24px; color: #704400;">{{ chicken.name }}</div>

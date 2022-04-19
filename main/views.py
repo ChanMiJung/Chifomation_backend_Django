@@ -117,7 +117,7 @@ def detail(request, chicken_id):
             tags[i] = '#' + tags[i]
         chicken.tags = tags
     chicken.average_score = float(chicken.score)
-    chicken.img_url = '/static/media/chickens/bhc/havanero_poteking_fride.png'
+    # chicken.img_url = '/static/media/chickens/bhc/havanero_poteking_fride.png'
     chicken.brand_name = chicken.brand.name
     chicken.category_name = chicken.category.name
     

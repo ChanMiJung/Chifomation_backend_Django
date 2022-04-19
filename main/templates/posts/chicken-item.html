@@ -2,7 +2,11 @@
 <div class="chicken-item" style="cursor: pointer; width: 624px; height: 180px; margin: 8px 0; display: flex; justify-content: start;">
   <input type="hidden" id="chickenId" value="{{ chicken.id }}">
   <div style="width: 320px; height: 180px; background: #FFFFFF 0% 0% no-repeat padding-box;">
-    <img src="{% static 'media/chickens/bhc/havanero_poteking_fride.png' %}" style="width: 320px; height: 180px;" alt="...">
+    {% if chicken.img_url %}
+    <img src="{{ chicken.img_url }}" style="width: 320px; height: 180px;" alt="...">
+    {% else %}
+    <img src="{% static 'media/logos/logo.png' %}" style="width: 320px; height: 180px;" alt="...">
+    {% endif %}
   </div>
   <div style="width: 304px; height: 180px; background: #B59A72 0% 0% no-repeat padding-box; padding: 16px 12px;">
     <div style="font-family: scdream7; font-size: 20px; color: #553300; word-break: keep-all;">{{ chicken.name }}</div>
