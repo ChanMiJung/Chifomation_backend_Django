@@ -1,24 +1,50 @@
+from rest_framework.request import Request
 from django.shortcuts import render, get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import BrandSerializer, ChickenSerializer, CategorySerializer
 from .models import Brand, Chicken, Category
+from rest_framework.mixins import ListModelMixin, CreateModelMixin, UpdateModelMixin, RetrieveModelMixin
+from rest_framework.generics import GenericAPIView
 
 # Create your views here.
-@api_view(['GET'])
-def brand_list(request):
-    brands = Brand.objects.all()
-    serializer = BrandSerializer(brands, many=True)
-    return Response(serializer.data)
+class BrandListView(ListModelMixin, GenericAPIView):
+    queryset = Brand.objects.order_by('-id')
+    serializer_class = BrandSerializer
 
-@api_view(['POST'])
-def brand_insert(request):
-    serializer = BrandSerializer(data = request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status = status.HTTP_201_CREATED)
-    return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    def get(self, request: Request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+# @api_view(['GET'])
+# def brand_list(request):
+#     brands = Brand.objects.all()
+#     serializer = BrandSerializer(brands, many=True)
+#     return Response(serializer.data)
+
+class BrandDetailView(RetrieveModelMixin, GenericAPIView):
+    queryset = Brand.objects.order_by('-id')
+    serializer_class = BrandSerializer
+
+    def get(self, request: Request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+class BrandCreateView(CreateModelMixin, GenericAPIView):
+    queryset = Brand.objects.order_by('-id')
+    serializer_class = BrandSerializer
+
+    def create(self, request: Request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+    
+# @api_view(['POST'])
+# def brand_insert(request):
+#     serializer = BrandSerializer(data = request.data)
+#     if serializer.is_valid():
+#         serializer.save()
+#         return Response(serializer.data, status = status.HTTP_201_CREATED)
+#     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+# class CategoryListView(ListModelMixin, GenericAPIView):
 
 @api_view(['GET'])
 def category_list(request):
@@ -42,7 +68,7 @@ def brand_update(request, brand_id):
     serializer = BrandSerializer(brand, data = request.data)
     if serializer.is_valid():
         serializer.save()
-        return Response(Serializer.data)
+        return Response(BrandSerializer.data)
     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
@@ -57,6 +83,11 @@ def chicken_insert(request):
     if Brand.objects.filter(name=data['brand']).exists():
         brand = Brand.objects.get(name=data['brand']).id
         data['brand'] = brand
+        category = Category.objects.get(name=data['category']).id
+        data['category'] = category
+        if data['original_category'] == '' and data['category'] != '':
+            data['origninal_category'] = data['category']
+
         serializer = ChickenSerializer(data = data)
         if serializer.is_valid():
             serializer.save()
