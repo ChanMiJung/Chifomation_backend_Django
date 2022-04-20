@@ -22,6 +22,29 @@
     <link rel="icon" href="{% static 'media/favicon/favicon.ico' %}">
     {% block head %}{% endblock %}
     <title>치포메이션</title>
+    <style>
+      @media screen and (min-width:720px) {
+        .menu-size {
+          width: 300px; 
+          height: 420px;
+        }
+        .menu-item-size {
+          width: 260px; 
+          height: 26px;
+        }
+      }
+      @media screen and (max-width:720px) {
+        .menu-size {
+          max-width: 300px; 
+          height: 420px;
+        }
+        .menu-item-size {
+          min-width: 200px;
+          max-width: 260px; 
+          height: 26px;
+        }
+      }
+    </style>
   </head>
   <body style="cursor: default; background-color: #FAF3D9; position: relative; max-width: 720px; margin: 0px auto;">
     {% csrf_token %}
@@ -32,10 +55,10 @@
     </div>
     <div id="mainNav" style="position: relative; display:none; width: 624px; height: 460px; margin: 12px auto; background-color: #B59A72; padding: 20px 12px;">
       <div style="display: flex; justify-content: start;">
-        <div style="width: 300px; height: 420px;">
+        <div class="menu-size">
           <div style="height: 34px; font-family: scdream8; font-size: 22px; color: #704400;">브랜드</div>
           {% for brand in brands %}
-          <div style="margin-top: 8px; width: 260px; height: 26px;">
+          <div class="menu-item-size" style="margin-top: 8px;">
             <div class="menu-item" style="display: inline-block; height: 26px; cursor: pointer; font-family: scdream5; font-size: 18px; color: #FEFBF1;">
               <input type="hidden" id="menuName" value="{{ brand.name }}">
               - {{ brand.name }}
@@ -43,10 +66,10 @@
           </div>
           {% endfor %}
         </div>
-        <div style="width: 300px; height: 420px;">
+        <div class="menu-size">
           <div style="height: 34px; font-family: scdream8; font-size: 22px; color: #704400;">카테고리</div>
           {% for category in categories %}
-          <div style="margin-top: 8px; width: 260px; height: 26px;">
+          <div class="menu-item-size" style="margin-top: 8px;">
             <div class="menu-item" style="display: inline-block; height: 26px; cursor: pointer; font-family: scdream5; font-size: 18px; color: #FEFBF1;">
               <input type="hidden" id="menuName" value="{{ category.name }}">
               - {{ category.name }}
