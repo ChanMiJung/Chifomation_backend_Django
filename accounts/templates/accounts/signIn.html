@@ -27,25 +27,129 @@
         font-family: scdream4;
         font-size: 16px;
       }
+      @media screen and (min-width:720px) {
+        .background-style {
+          width: 512px; 
+          height: 406px; 
+          margin: 100px 104px 0px 104px; 
+          background: #DDC8A8 0% 0% no-repeat padding-box; 
+          border: 1px solid #704400; 
+          border-radius: 10px;
+        }
+        .main-position {
+          margin: 27px 146px;
+        }
+        .username-style {
+          width: 396px; 
+          height: 52px; 
+          background: #FFFFFF 0% 0% no-repeat padding-box; 
+          border: 1px solid #704400; 
+          border-radius: 10px; 
+          margin: 26px 58px; 
+          padding: 14px 12px;
+        }
+        .password-style {
+          width: 396px; 
+          height: 52px; 
+          background: #FFFFFF 0% 0% no-repeat padding-box; 
+          border: 1px solid #704400; 
+          border-radius: 10px; 
+          margin: 0px 58px; 
+          padding: 14px 12px;
+        }
+        .signin-style {
+          cursor: pointer; 
+          margin: 42px 58px 0 58px; 
+          width: 396px; 
+          height: 70px; 
+          background: #B59A72 0% 0% no-repeat padding-box; 
+          border: 1px solid #704400; 
+          border-radius: 10px; 
+          padding: 21px 168px; 
+          font-size: 20px; 
+          font-family: scdream5; 
+          color: #FAF3D9;
+        }
+        .signup-style {
+          cursor: pointer; 
+          margin: 6px 229px; 
+          width: 54px; 
+          height: 20px; 
+          font-family: scdream4; 
+          font-size: 14px; 
+          color: #60482C;
+        }
+      }
+      @media screen and (max-width:720px) {
+        .background-style {
+          max-width: 512px; 
+          height: 406px; 
+          margin-top: 100px;
+        }
+        .main-position {
+          margin: 27px auto;
+          text-align: center;
+        }
+        .username-style {
+          max-width: 396px; 
+          height: 52px; 
+          background: #FFFFFF 0% 0% no-repeat padding-box; 
+          border: 1px solid #704400; 
+          border-radius: 10px; 
+          margin: 26px auto; 
+          padding: 14px 12px;
+        }
+        .password-style {
+          max-width: 396px; 
+          height: 52px; 
+          background: #FFFFFF 0% 0% no-repeat padding-box; 
+          border: 1px solid #704400; 
+          border-radius: 10px; 
+          margin: 0px auto; 
+          padding: 14px 12px;
+        }
+        .signin-style {
+          cursor: pointer; 
+          margin: 42px auto 0 auto; 
+          max-width: 396px; 
+          height: 70px; 
+          background: #B59A72 0% 0% no-repeat padding-box; 
+          border: 1px solid #704400; 
+          border-radius: 10px; 
+          padding: 21px 168px; 
+          font-size: 20px; 
+          font-family: scdream5; 
+          color: #FAF3D9;
+        }
+        .signup-style {
+          cursor: pointer; 
+          margin: 6px auto; 
+          width: 54px; 
+          height: 20px; 
+          font-family: scdream4; 
+          font-size: 14px; 
+          color: #60482C;
+        }
+      }
     </style>
   </head>
   <body style="cursor: default; background-color: #FAF3D9;">
     <div style="position: relative; max-width: 720px; margin: 0px auto;">
-      <div style="width: 512; height: 406px; margin: 100px 104px 0px 104px; background: #DDC8A8 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px;">
-        <div id="main" style="cursor: pointer; margin: 27px 146px;"><img src="{% static 'media/logos/main_logo.png' %}" style="width:220px;" alt=""></div>
+      <div class="background-style">
+        <div id="main" class="main-position" style="cursor: pointer;"><img src="{% static 'media/logos/main_logo.png' %}" style="width:220px;" alt=""></div>
         <form method="POST" name="signInInfo" action="return false;">
           {% csrf_token %}
-          <div style="width: 396px; height: 52px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin: 26px 58px; padding: 14px 12px;">
+          <div class="username-style">
             <!-- <div contenteditable="true" id="loginId" onKeyPress="javascript: if (event.keyCode==13) return false;" style="outline: none; cursor: text; color: #704400; font-family: scdream4; font-size: 16px;" placeholder="아이디"></div> -->
             <input name="username" id="username" style="outline: none; border: 0; cursor: text; color: #704400; font-family: scdream4; font-size: 16px; width: 100%;" placeholder="아이디">
           </div>
-          <div style="width: 396px; height: 52px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin: 0px 58px; padding: 14px 12px;">
+          <div class="password-style">
             <!-- <div contenteditable="true" id="loginPwd" onKeyPress="javascript: if (event.keyCode==13) return false;" style="outline: none; cursor: text; color: #704400; font-family: scdream4; font-size: 16px;" placeholder="비밀번호"></div> -->
             <input name="password" id="password" type="password" style="outline: none; border: 0; cursor: text; color: #704400; font-family: scdream4; font-size: 16px; width: 100%;" placeholder="비밀번호">
           </div>
         </form>
-        <div id="loginUser" style="cursor: pointer; margin: 42px 58px 0 58px; width: 396px; height: 70px; background: #B59A72 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; padding: 21px 168px; font-size: 20px; font-family: scdream5; color: #FAF3D9;">로그인</div>
-        <div id="enrollUser" style="cursor: pointer; margin: 6px 229px; width: 54px; height: 20px; font-family: scdream4; font-size: 14px; color: #60482C;">회원가입</div>
+        <div id="loginUser" class="signin-style">로그인</div>
+        <div id="enrollUser" class="signup-style">회원가입</div>
       </div>
     </div>
   </body>

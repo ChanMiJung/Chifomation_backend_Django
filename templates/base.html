@@ -32,6 +32,9 @@
           width: 260px; 
           height: 26px;
         }
+        .nav-size {
+          margin: 15px auto 0px auto;
+        }
       }
       @media screen and (max-width:720px) {
         .menu-size {
@@ -43,15 +46,18 @@
           max-width: 260px; 
           height: 26px;
         }
+        .nav-size {
+          margin: 15px 10px 0px 10px;
+        }
       }
     </style>
   </head>
   <body style="cursor: default; background-color: #FAF3D9; position: relative; max-width: 720px; margin: 0px auto;">
     {% csrf_token %}
-    <div style="position: relative; max-width: 624px; margin: 0px auto; display: flex; justify-content: space-between; margin-top:15px;">
+    <div class="nav-size" style="position: relative; max-width: 624px; display: flex; justify-content: space-between;">
       <div id="mainNavButton" style="cursor:pointer; margin-top: 5px;"><img src="{% static 'media/icon/menu.png' %}" style="width:26px;" alt=""></div>
       <button type="button" onclick="location.href='/'" style="background-color:transparent; border: 0; outline: 0;"><img src="{% static 'media/logos/main_logo.png' %}" style="width: 207px;" alt=""></button>
-      <div id="profile" style="margin-top: 9px; width: 28px; height: 28px; cursor: pointer;"><img src="{% if user.is_anonymous %}{% static 'media/icon/off_profile.png' %}{% else %}{% static 'media/icon/on_profile.png' %}{% endif %}" style="width:28px;" alt=""></div>
+      <div id="profile" style="margin-top: 5px; width: 28px; height: 28px; cursor: pointer;"><img src="{% if user.is_anonymous %}{% static 'media/icon/off_profile.png' %}{% else %}{% static 'media/icon/on_profile.png' %}{% endif %}" style="width:28px;" alt=""></div>
     </div>
     <div id="mainNav" style="position: relative; display:none; width: 624px; height: 460px; margin: 12px auto; background-color: #B59A72; padding: 20px 12px;">
       <div style="display: flex; justify-content: start;">
