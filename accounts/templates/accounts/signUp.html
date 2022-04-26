@@ -21,56 +21,205 @@
     <link rel="stylesheet" href="https://unpkg.com/@egjs/flicking/dist/flicking.css" crossorigin="anonymous" />
     <link rel="icon" href="{% static 'media/favicon/favicon.ico' %}">
     <title>치포메이션</title>
+    <style>
+      @media screen and (min-width:720px) {
+        .main-logo-position {
+          cursor: pointer; 
+          margin: 80px 228px 0 228px;
+        }
+        .form-position {
+          margin: 38px 120px; 
+          width: 480px;
+        }
+        .username-style {
+          width: 480px; 
+          height: 52px; 
+          background: #FFFFFF 0% 0% no-repeat padding-box; 
+          border: 1px solid #704400; 
+          border-radius: 10px; 
+          margin-top: 2px; 
+          padding: 15px 18px;
+        }
+        .password1-style {
+          width: 480px; 
+          height: 52px; 
+          background: #FFFFFF 0% 0% no-repeat padding-box; 
+          border: 1px solid #704400; 
+          border-radius: 10px; 
+          margin-top: 2px; 
+          padding: 15px 18px;
+        }
+        .password2-style {
+          width: 480px; 
+          height: 52px; 
+          background: #FFFFFF 0% 0% no-repeat padding-box; 
+          border: 1px solid #704400; 
+          border-radius: 10px; 
+          margin-top: 2px; 
+          padding: 15px 18px;
+        }
+        .firstname-style {
+          width: 480px; 
+          height: 52px; 
+          background: #FFFFFF 0% 0% no-repeat padding-box; 
+          border: 1px solid #704400; 
+          border-radius: 10px; 
+          margin-top: 2px; 
+          padding: 15px 18px;
+        }
+        .phonenum-style {
+          width: 480px; 
+          height: 52px; 
+          background: #FFFFFF 0% 0% no-repeat padding-box; 
+          border: 1px solid #704400; 
+          border-radius: 10px; 
+          margin-top: 2px; 
+          padding: 15px 18px;
+        }
+        .enroll-button {
+          margin-top: 40px; 
+          width: 480px; 
+          height: 70; 
+          background: #B59A72 0% 0% no-repeat padding-box; 
+          border: 1px solid #707070; 
+          border-radius: 10px; 
+          padding: 20px 195px; 
+          font-size: 22px; 
+          font-family: scdream5; 
+          color: #FAF3D9;
+        }
+      }
+      @media screen and (max-width:720px) {
+        .main-logo-position {
+          cursor: pointer; 
+          margin: 80px auto 0 auto;
+          text-align: center;
+        }
+        .form-position {
+          margin: 38px auto; 
+          max-width: 480px;
+        }
+        .username-style {
+          max-width: 480px; 
+          height: 52px; 
+          background: #FFFFFF 0% 0% no-repeat padding-box; 
+          border: 1px solid #704400; 
+          border-radius: 10px; 
+          margin-top: 2px; 
+          padding: 15px 18px;
+        }
+        .password1-style {
+          max-width: 480px; 
+          height: 52px; 
+          background: #FFFFFF 0% 0% no-repeat padding-box; 
+          border: 1px solid #704400; 
+          border-radius: 10px; 
+          margin-top: 2px; 
+          padding: 15px 18px;
+        }
+        .password2-style {
+          max-width: 480px; 
+          height: 52px; 
+          background: #FFFFFF 0% 0% no-repeat padding-box; 
+          border: 1px solid #704400; 
+          border-radius: 10px; 
+          margin-top: 2px; 
+          padding: 15px 18px;
+        }
+        .firstname-style {
+          max-width: 480px; 
+          height: 52px; 
+          background: #FFFFFF 0% 0% no-repeat padding-box; 
+          border: 1px solid #704400; 
+          border-radius: 10px; 
+          margin-top: 2px; 
+          padding: 15px 18px;
+        }
+        .nickname-style {
+          max-width: 480px; 
+          height: 52px; 
+          background: #FFFFFF 0% 0% no-repeat padding-box; 
+          border: 1px solid #704400; 
+          border-radius: 10px; 
+          margin-top: 2px; 
+          padding: 15px 18px;
+        }
+        .phonenum-style {
+          max-width: 480px; 
+          height: 52px; 
+          background: #FFFFFF 0% 0% no-repeat padding-box; 
+          border: 1px solid #704400; 
+          border-radius: 10px; 
+          margin-top: 2px; 
+          padding: 15px 18px;
+        }
+        .enroll-button {
+          margin-top: 40px; 
+          max-width: 480px; 
+          height: 70px; 
+          background: #B59A72 0% 0% no-repeat padding-box; 
+          border: 1px solid #707070; 
+          border-radius: 10px; 
+          padding: 20px auto; 
+          font-size: 22px; 
+          font-family: scdream5; 
+          color: #FAF3D9;
+          text-align: center;
+        }
+      }
+    </style>
   </head>
   <body style="cursor: default; background-color: #FAF3D9;">
     <div style="position: relative; max-width: 720px; margin: 0px auto;">
-      <div id="main" style="cursor: pointer; margin: 80px 228px 0 228px;"><img src="{% static 'media/logos/main_logo.png' %}" style="width:264px;" alt=""></div>
-      <div style="margin: 38px 120px; width: 480px;">
+      <div id="main" class="main-logo-position"><img src="{% static 'media/logos/main_logo.png' %}" style="width:264px;" alt=""></div>
+      <div class="form-position">
         <form method="POST" name="signUp" onsubmit="return false;">
           {% csrf_token %}
           <div>
             <div style="outline: none; color: #6C4B24; font-family: scdream5; font-size: 14px;">아이디</div>
-            <div style="width: 480px; height: 52px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 2px; padding: 15px 18px;">
+            <div class="username-style">
               <input name="username" id="username" style="outline: none; border: 0; width: 100%; cursor: text; color: #704400; font-family: scdream4; font-size: 16px;">
             </div>
             <div id="idWarning" style="outline: none; font-family: scdream3; font-size: 12px; color: #DA0000; margin-top: 4px; height: 20px; display: none;"></div>
           </div>
           <div style="margin-top: 20px;">
             <div style="outline: none; color: #6C4B24; font-family: scdream5; font-size: 14px;">비밀번호</div>
-            <div style="width: 480px; height: 52px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 2px; padding: 15px 18px;">
+            <div class="password1-style">
               <input name="password1" type="password" id="password1" style="outline: none; border: 0; width: 100%; cursor: text; color: #704400; font-family: scdream4; font-size: 16px;">
             </div>  
             <div id="password1Warning" style="outline: none; font-family: scdream3; font-size: 12px; color: #DA0000; margin-top: 4px; height: 20px; display: none;"></div>
           </div>
           <div style="margin-top: 20px;">
             <div style="outline: none; color: #6C4B24; font-family: scdream5; font-size: 14px;">비밀번호 확인</div>
-            <div style="width: 480px; height: 52px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 2px; padding: 15px 18px;">
+            <div class="password2-style">
               <input name="password2" type="password" id="password2" style="outline: none; border: 0; width: 100%; cursor: text; color: #704400; font-family: scdream4; font-size: 16px;">
             </div>
             <div id="password2Warning" style="outline: none; font-family: scdream3; font-size: 12px; color: #DA0000; margin-top: 4px; height: 20px; display: none;"></div>
           </div>
           <div style="margin-top: 40px;">
             <div style="outline: none; color: #6C4B24; font-family: scdream5; font-size: 14px;">이름</div>
-            <div style="width: 480px; height: 52px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 2px; padding: 15px 18px;">
+            <div class="firstname-style">
               <input name="first_name" id="firstName" style="outline: none; border: 0; width: 100%; cursor: text; color: #704400; font-family: scdream4; font-size: 16px;">
             </div>
             <div id="firstNameWarning" style="outline: none; font-family: scdream3; font-size: 12px; color: #DA0000; margin-top: 4px; height: 20px; display: none;"></div>
           </div>
           <div style="margin-top: 20px;">
             <div style="outline: none; color: #6C4B24; font-family: scdream5; font-size: 14px;">닉네임</div>
-            <div style="width: 480px; height: 52px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 2px; padding: 15px 18px;">
+            <div class="nickname-style">
               <input name="nickname" id="nickname" style="outline: none; border: 0; width: 100%; cursor: text; color: #704400; font-family: scdream4; font-size: 16px;">
             </div>
             <div id="nicknameWarning" style="outline: none; font-family: scdream3; font-size: 12px; color: #DA0000; margin-top: 4px; height: 20px; display: none;"></div>
           </div>
           <div style="margin-top: 20px;">
             <div style="outline: none; color: #6C4B24; font-family: scdream5; font-size: 14px;">전화번호</div>
-            <div style="width: 480px; height: 52px; background: #FFFFFF 0% 0% no-repeat padding-box; border: 1px solid #704400; border-radius: 10px; margin-top: 2px; padding: 15px 18px;">
+            <div class="phonenum-style">
               <input name="phoneNum" id="phoneNum" style="outline: none; border: 0; width: 100%; cursor: text; color: #704400; font-family: scdream4; font-size: 16px;">
             </div>
             <div id="phoneNumWarning" style="outline: none; font-family: scdream3; font-size: 12px; color: #DA0000; margin-top: 4px; height: 20px; display: none;"></div>
           </div>
-          <button id="enrollUser" style="margin-top: 40px; width: 480px; height: 70; background: #B59A72 0% 0% no-repeat padding-box; border: 1px solid #707070; border-radius: 10px; padding: 20px 195px; font-size: 22px; font-family: scdream5; color: #FAF3D9;">가입하기</button>
+          <div class="enroll-button">
+            <button id="enrollUser" style="border: 0;">가입하기</button>
+          </div>
         </form>
       </div>
     </div>
